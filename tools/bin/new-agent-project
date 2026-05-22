@@ -31,6 +31,12 @@ fi
 mkdir -p "$CODE_DIR"
 cp -a "$TEMPLATE" "$TARGET"
 
+# Safety cleanup: project-level .opencode must contain only config/instructions.
+rm -rf "$TARGET/.opencode/node_modules"
+rm -f "$TARGET/.opencode/package.json"
+rm -f "$TARGET/.opencode/package-lock.json"
+rm -f "$TARGET/.opencode/.gitignore"
+
 cd "$TARGET"
 
 # Replace default title in README.
