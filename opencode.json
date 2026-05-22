@@ -1,0 +1,141 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "architect",
+  "instructions": [
+    "AGENTS.md",
+    ".opencode/instructions.md",
+    "docs/architecture.md"
+  ],
+  "permission": {
+    "*": "ask",
+    "read": "allow",
+    "grep": "allow",
+    "glob": "allow",
+    "lsp": "allow",
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "pwd": "allow",
+      "ls *": "allow",
+      "dir *": "allow",
+      "cat *": "allow",
+      "type *": "allow",
+      "rg *": "allow",
+      "grep *": "allow",
+      "find *": "allow",
+      "Get-ChildItem *": "allow",
+      "Get-Content *": "allow",
+      "Select-String *": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "npm install*": "ask",
+      "npm run *": "ask",
+      "pnpm install*": "ask",
+      "pnpm *": "ask",
+      "yarn install*": "ask",
+      "yarn *": "ask",
+      "git push*": "deny",
+      "rm -rf *": "deny",
+      "del *": "ask",
+      "rmdir *": "ask",
+      "Remove-Item *": "ask",
+      "Remove-Item -Recurse *": "deny",
+      "Remove-Item -Recurse -Force *": "deny",
+      "sudo *": "deny",
+      "format *": "deny"
+    }
+  },
+  "agent": {
+    "architect": {
+      "description": "Plans architecture and implementation without editing files.",
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "pwd": "allow",
+          "ls *": "allow",
+          "dir *": "allow",
+          "rg *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow"
+        }
+      },
+      "prompt": "You are a senior software architect. Analyze the repository, explain architecture, risks, tradeoffs, and implementation plan. Do not edit files."
+    },
+    "implementer": {
+      "description": "Implements approved changes carefully.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "pwd": "allow",
+          "ls *": "allow",
+          "dir *": "allow",
+          "rg *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "npm test*": "ask",
+          "npm run *": "ask",
+          "pnpm test*": "ask",
+          "pnpm *": "ask",
+          "git push*": "deny",
+          "Remove-Item -Recurse -Force *": "deny"
+        }
+      },
+      "prompt": "You are a careful implementation agent. Make small, reviewable changes. Explain the plan before editing and summarize the diff after editing."
+    },
+    "reviewer": {
+      "description": "Reviews code without editing.",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "rg *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow"
+        }
+      },
+      "prompt": "You are a strict code reviewer. Do not edit files. Find bugs, security issues, missing tests, and architecture problems."
+    }
+  },
+  "command": {
+    "analyze": {
+      "description": "Analyze current project architecture",
+      "agent": "architect",
+      "template": "Analyze this repository. Explain purpose, stack, architecture, important directories, data flow, build/test commands, risks, and next steps. Do not edit files."
+    },
+    "plan": {
+      "description": "Create implementation plan",
+      "agent": "architect",
+      "template": "Create a step-by-step implementation plan for: $ARGUMENTS. Include affected files, risks, test plan, and rollback plan. Do not edit files."
+    },
+    "fix": {
+      "description": "Implement requested change",
+      "agent": "implementer",
+      "template": "Implement this change carefully: $ARGUMENTS. First inspect relevant files, then make small edits, then show the diff and verification steps."
+    },
+    "review": {
+      "description": "Review current diff",
+      "agent": "reviewer",
+      "subtask": true,
+      "template": "Review the current git diff. Focus on bugs, security, tests, maintainability, and architecture. Do not edit files."
+    }
+  },
+  "tool_output": {
+    "max_lines": 200,
+    "max_bytes": 12000
+  },
+  "compaction": {
+    "auto": true,
+    "tail_turns": 15
+  },
+  "share": "manual",
+  "autoupdate": "notify"
+}

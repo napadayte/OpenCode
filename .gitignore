@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Env / secrets
+.env
+.env.*
+auth.json
+tokens
+credentials
+*.key
+*.pem
+
+# Local cache / temp
+.cache/
+.local/
+tmp/
+temp/
+
+# Backups / archives
+*.tar
+*.tar.gz
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
