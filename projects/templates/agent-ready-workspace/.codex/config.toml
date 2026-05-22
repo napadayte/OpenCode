@@ -1,0 +1,13 @@
+# Codex project config
+# Keep this file free of secrets.
+
+# Shared workspace contract:
+# - AGENTS.md
+# - README.md
+# - docs/overview.md
+# - docs/runbook.md
+# - docs/rules/*
+
+# Codex should classify first, plan before non-trivial changes,
+# avoid commits/pushes unless explicitly requested,
+# and protect secrets, data, backups, databases, Docker volumes, and n8n data.

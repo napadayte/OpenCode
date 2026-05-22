@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TEMPLATE="$HOME/.config/opencode/projects/templates/agent-ready-workspace"
+CODE_DIR="$HOME/code"
+
+if [ $# -lt 1 ]; then
+  echo "Usage:"
+  echo "  new-agent-workspace <workspace-name>"
+  echo
+  echo "Example:"
+  echo "  new-agent-workspace stock-scanner-research"
+  exit 1
+fi
+
+WORKSPACE_NAME="$1"
+TARGET="$CODE_DIR/$WORKSPACE_NAME"
+
+if [ ! -d "$TEMPLATE" ]; then
+  echo "Template not found:"
+  echo "  $TEMPLATE"
+  exit 1
+fi
+
+if [ -e "$TARGET" ]; then
+  echo "Workspace already exists:"
+  echo "  $TARGET"
+  exit 1
+fi
+
+mkdir -p "$CODE_DIR"
+mkdir -p "$TARGET"
+
+# Copy template safely.
+# Do not copy accidental caches, node_modules, git folders, auth files, or generated archives.
+(
+  cd "$TEMPLATE"
+  tar \
+    --exclude='.git' \
+    --exclude='node_modules' \
+    --exclude='.cache' \
+    --exclude='*.tar' \
+    --exclude='*.tar.gz' \
+    --exclude='*.zip' \
+    --exclude='*.sqlite' \
+    --exclude='*.db' \
+    --exclude='auth.json' \
+    --exclude='oauth_creds.json' \
+    --exclude='google_accounts.json' \
+    -cf - .
+) | (
+  cd "$TARGET"
+  tar -xf -
+)
+
+cd "$TARGET"
+
+# Replace title if README has the default title.
+if [ -f README.md ]; then
+  sed -i \
+    -e "s/^# Workspace Name/# $WORKSPACE_NAME/" \
+    -e "s/^# Agent-Ready Workspace/# $WORKSPACE_NAME/" \
+    README.md
+fi
+
+git init >/dev/null
+git branch -M main
+
+echo "Created agent-ready workspace:"
+echo "  $TARGET"
+echo
+echo "Next steps:"
+echo "  cd $TARGET"
+echo "  edit README.md"
+echo "  edit AGENTS.md"
+echo "  edit docs/rules/"
+echo "  edit data/inventory.md if you add data"
+echo "  opencode"
+echo
+echo "Safety:"
+echo "  Do not commit secrets."
+echo "  Do not commit backups, exports, databases, or auth files."
+echo "  Commit manually only after review."
