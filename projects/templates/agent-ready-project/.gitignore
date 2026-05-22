@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+
+# Environment / secrets
+.env
+.env.*
+*.key
+*.pem
+auth.json
+tokens
+credentials
+
+# Logs
+*.log
+logs/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.cache/
+
+# Archives / backups
+*.tar
+*.tar.gz
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
