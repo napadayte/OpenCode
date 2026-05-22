@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SRC="$HOME/.config/opencode/tools/bin"
-DEST="$HOME/.local/bin"
+# Resolve script location (follow symlinks) → derive repo's tools/bin directory.
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [ "${SOURCE#/}" = "$SOURCE" ] && SOURCE="$DIR/$SOURCE"
+done
+SRC="$(cd -P "$(dirname "$SOURCE")" && pwd)"
 
+DEST="$HOME/.local/bin"
 mkdir -p "$DEST"
 
 for name in \
@@ -14,11 +21,12 @@ for name in \
   capture-agent-asset \
   install-opencode-tools
 do
-  if [ -x "$SRC/$name" ]; then
+  if [ -f "$SRC/$name" ]; then
+    chmod +x "$SRC/$name"
     ln -sf "$SRC/$name" "$DEST/$name"
     echo "linked: $DEST/$name"
   else
-    echo "missing or not executable: $SRC/$name"
+    echo "missing: $SRC/$name"
   fi
 done
 
