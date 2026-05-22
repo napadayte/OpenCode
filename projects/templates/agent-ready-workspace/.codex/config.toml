@@ -1,25 +1,31 @@
 # Codex project config
 # Keep this file free of secrets.
 
-# Shared workspace contract:
-# - AGENTS.md
-# - README.md
-# - docs/overview.md
-# - docs/runbook.md
-# - docs/rules/*
-
-# Codex should classify first, plan before non-trivial changes,
-# avoid commits/pushes unless explicitly requested,
-# and protect secrets, data, backups, databases, Docker volumes, and n8n data.
-
-
-# Agent roles:
-# - agents/*
+# Codex should follow AGENTS.md — same rules and structure as every other shell.
 #
-# Skills:
-# - skills/*
+# Read first:
+#   - AGENTS.md
+#   - README.md
+#   - docs/overview.md
+#   - docs/runbook.md
+#   - .opencode/rules/dispatch-policy.md
+#   - .opencode/rules/workflow.md
+#
+# Agent roles:   .opencode/agents/
+# Skills:        .opencode/skills/<name>/SKILL.md
+# Rules:         .opencode/rules/
+# Commands:      .opencode/commands/
 #
 # Meaning:
-# - agent = who performs the task
-# - skill = how to perform the task
-# - rule = required constraint or safety boundary
+#   agent   = who performs the task
+#   skill   = how to perform the task
+#   rule    = required constraint or safety boundary
+#   command = reusable slash command
+#
+# Behavior:
+#   - Classify first.
+#   - Plan before non-trivial changes.
+#   - Do not push.
+#   - Do not commit unless explicitly requested.
+#   - Ask before destructive commands.
+#   - Protect secrets, data, backups, databases, Docker volumes, n8n data.

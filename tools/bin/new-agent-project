@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TEMPLATE="$HOME/.config/opencode/projects/templates/agent-ready-project"
-CODE_DIR="$HOME/code"
+# Resolve script location (follow symlinks) → derive repo root.
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [ "${SOURCE#/}" = "$SOURCE" ] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+TEMPLATE="$REPO_ROOT/projects/templates/agent-ready-project"
+CODE_DIR="${OPENCODE_CODE_DIR:-$HOME/code}"
 
 if [ $# -lt 1 ]; then
   echo "Usage:"
@@ -29,15 +39,33 @@ if [ -e "$TARGET" ]; then
 fi
 
 mkdir -p "$CODE_DIR"
-cp -a "$TEMPLATE" "$TARGET"
+mkdir -p "$TARGET"
 
-# Safety cleanup: project-level .opencode must contain only config/instructions.
-rm -rf "$TARGET/.opencode/node_modules"
-rm -f "$TARGET/.opencode/package.json"
-rm -f "$TARGET/.opencode/package-lock.json"
-rm -f "$TARGET/.opencode/.gitignore"
+# Safe copy via tar — exclude metadata, caches, secrets, archives.
+(
+  cd "$TEMPLATE"
+  tar \
+    --exclude='.git' \
+    --exclude='node_modules' \
+    --exclude='.cache' \
+    --exclude='*.tar' \
+    --exclude='*.tar.gz' \
+    --exclude='*.zip' \
+    --exclude='auth.json' \
+    --exclude='oauth_creds.json' \
+    --exclude='google_accounts.json' \
+    -cf - .
+) | (
+  cd "$TARGET"
+  tar -xf -
+)
 
 cd "$TARGET"
+
+# Template-specific cleanup for .opencode/ adapter folder.
+rm -f .opencode/package.json
+rm -f .opencode/package-lock.json
+rm -f .opencode/.gitignore
 
 # Replace default title in README.
 if [ -f README.md ]; then
