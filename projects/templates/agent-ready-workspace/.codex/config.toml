@@ -11,3 +11,15 @@
 # Codex should classify first, plan before non-trivial changes,
 # avoid commits/pushes unless explicitly requested,
 # and protect secrets, data, backups, databases, Docker volumes, and n8n data.
+
+
+# Agent roles:
+# - agents/*
+#
+# Skills:
+# - skills/*
+#
+# Meaning:
+# - agent = who performs the task
+# - skill = how to perform the task
+# - rule = required constraint or safety boundary

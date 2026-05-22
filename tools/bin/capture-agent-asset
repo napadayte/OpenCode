@@ -1,0 +1,194 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -lt 1 ]; then
+  echo "Usage:"
+  echo "  capture-agent-asset <source-file> [asset-name]"
+  echo
+  echo "Example:"
+  echo "  capture-agent-asset ~/Downloads/claude-rules.md claude-rules"
+  exit 1
+fi
+
+SOURCE="$1"
+
+if [ ! -f "$SOURCE" ]; then
+  echo "Source file not found:"
+  echo "  $SOURCE"
+  exit 1
+fi
+
+ROOT="$PWD"
+while [ "$ROOT" != "/" ]; do
+  if [ -f "$ROOT/AGENTS.md" ] && [ -d "$ROOT/docs" ]; then
+    break
+  fi
+  ROOT="$(dirname "$ROOT")"
+done
+
+if [ "$ROOT" = "/" ]; then
+  echo "Workspace root not found."
+  echo "Run this inside an agent-ready workspace."
+  exit 1
+fi
+
+if [ $# -ge 2 ]; then
+  NAME="$2"
+else
+  NAME="$(basename "$SOURCE")"
+fi
+
+SLUG="$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
+
+if [ -z "$SLUG" ]; then
+  echo "Could not create slug. Provide asset name:"
+  echo "  capture-agent-asset <source-file> useful-agent-rules"
+  exit 1
+fi
+
+DATE="$(date +%Y-%m-%d_%H-%M)"
+DIR="$ROOT/research/agent-assets/${DATE}_${SLUG}"
+
+mkdir -p "$DIR"
+
+EXT="${SOURCE##*.}"
+cp "$SOURCE" "$DIR/source.$EXT"
+
+TYPE="mixed"
+if grep -Eiq 'you are|agent|role|responsibilities' "$SOURCE"; then
+  TYPE="agent-candidate"
+fi
+if grep -Eiq 'steps|workflow|pipeline|output format|when to use' "$SOURCE"; then
+  if [ "$TYPE" = "agent-candidate" ]; then
+    TYPE="mixed-agent-skill-candidate"
+  else
+    TYPE="skill-candidate"
+  fi
+fi
+if grep -Eiq 'never|do not|ask before|dangerous|secrets|credentials' "$SOURCE"; then
+  TYPE="$TYPE-with-rules"
+fi
+
+cat > "$DIR/review.md" <<EOF2
+# Agent Asset Review
+
+------------------------------------------------------------
+
+## Source
+
+Local source file:
+
+    source.$EXT
+
+Captured at:
+
+    $DATE
+
+Suggested type:
+
+    $TYPE
+
+------------------------------------------------------------
+
+## Decision
+
+Status:
+
+    pending
+
+Decision:
+
+    keep / reject / promote-agent / promote-skill / promote-rule / split
+
+------------------------------------------------------------
+
+## What To Extract
+
+Look for:
+
+- useful agent roles
+- useful skills
+- useful rules
+- workflow steps
+- output formats
+- safety checks
+- review checklists
+- stop conditions
+- edge cases
+
+------------------------------------------------------------
+
+## What To Reject
+
+Reject:
+
+- project-specific code instructions that do not apply
+- framework-specific rules that are not needed
+- vague motivational text
+- unsafe automation
+- secret-handling mistakes
+- automatic push/commit behavior
+- destructive behavior
+- copied text that should be rewritten
+
+------------------------------------------------------------
+
+## Promotion Targets
+
+Possible targets:
+
+    agents/
+    skills/
+    docs/rules/
+    docs/how-to-add-agents-skills.md
+
+------------------------------------------------------------
+
+## Extraction Prompt
+
+Use this prompt with an agent:
+
+Analyze research/agent-assets/${DATE}_${SLUG}/source.$EXT.
+
+Do not edit files.
+
+Extract only reusable ideas useful for this workspace.
+
+Classify each useful item as one of:
+
+- agent
+- skill
+- rule
+- checklist
+- workflow
+- reject
+
+For each useful item, return:
+
+- type
+- proposed name
+- why useful
+- where it should go
+- rewritten content in our style
+- risks
+- recommendation
+
+Do not copy large external text directly.
+
+Do not include secrets.
+
+------------------------------------------------------------
+EOF2
+
+echo "Captured agent asset:"
+echo "  $DIR"
+echo
+echo "Review file:"
+echo "  $DIR/review.md"
+echo
+echo "Raw source is copied as:"
+echo "  $DIR/source.$EXT"
+echo
+echo "Next:"
+echo "  open $DIR/review.md"
+echo "  run an agent review using the Extraction Prompt"

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SRC="$HOME/.config/opencode/tools/bin"
+DEST="$HOME/.local/bin"
+
+mkdir -p "$DEST"
+
+for name in \
+  new-agent-project \
+  new-agent-workspace \
+  new-agent-doc \
+  new-skill-doc \
+  capture-agent-asset \
+  install-opencode-tools
+do
+  if [ -x "$SRC/$name" ]; then
+    ln -sf "$SRC/$name" "$DEST/$name"
+    echo "linked: $DEST/$name"
+  else
+    echo "missing or not executable: $SRC/$name"
+  fi
+done
+
+echo
+echo "Check PATH:"
+echo '  echo "$PATH" | tr ":" "\n" | grep "$HOME/.local/bin"'
+echo
+echo "If missing, add this to ~/.bashrc:"
+echo '  export PATH="$HOME/.local/bin:$PATH"'

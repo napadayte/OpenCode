@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -lt 1 ]; then
+  echo "Usage:"
+  echo "  new-skill-doc <skill-slug>"
+  echo
+  echo "Example:"
+  echo "  new-skill-doc n8n-workflow-doc"
+  exit 1
+fi
+
+SLUG="$1"
+
+case "$SLUG" in
+  *[!a-z0-9-]*|"")
+    echo "Skill slug must use only lowercase letters, numbers, and hyphens."
+    echo "Example: n8n-workflow-doc"
+    exit 1
+    ;;
+esac
+
+ROOT="$PWD"
+while [ "$ROOT" != "/" ]; do
+  if [ -f "$ROOT/AGENTS.md" ] && [ -d "$ROOT/docs" ]; then
+    break
+  fi
+  ROOT="$(dirname "$ROOT")"
+done
+
+if [ "$ROOT" = "/" ]; then
+  echo "Workspace root not found."
+  echo "Run this inside an agent-ready workspace."
+  exit 1
+fi
+
+TARGET="$ROOT/skills/$SLUG.md"
+
+if [ -e "$TARGET" ]; then
+  echo "Skill already exists:"
+  echo "  $TARGET"
+  exit 1
+fi
+
+mkdir -p "$ROOT/skills"
+
+TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}') Skill"
+
+cat > "$TARGET" <<EOF2
+# $TITLE
+
+------------------------------------------------------------
+
+## Purpose
+
+Describe what this skill helps to do.
+
+------------------------------------------------------------
+
+## When To Use
+
+Use this skill when:
+
+- condition 1
+- condition 2
+- condition 3
+
+------------------------------------------------------------
+
+## Inputs Needed
+
+Ask for:
+
+- goal
+- environment
+- affected files
+- affected data
+- risks
+- expected output
+
+------------------------------------------------------------
+
+## Steps
+
+1. Classify the task.
+2. Read relevant rules.
+3. Identify affected files and data.
+4. Identify risks.
+5. Create a plan.
+6. Execute only approved actions.
+7. Verify result.
+8. Report result.
+
+------------------------------------------------------------
+
+## Output Format
+
+Return:
+
+- summary
+- steps
+- affected files
+- affected data
+- risks
+- verification
+- next step
+
+------------------------------------------------------------
+
+## Safety Rules
+
+- do not expose secrets
+- do not delete data without approval
+- do not commit unless requested
+- do not push unless requested
+- stop when uncertain
+
+------------------------------------------------------------
+EOF2
+
+echo "Created skill:"
+echo "  $TARGET"

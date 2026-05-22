@@ -91,3 +91,9 @@ out/
 Thumbs.db
 .vscode/
 .idea/
+
+research/agent-assets/*/source.*
+research/agent-assets/*/raw.*
+research/agent-assets/*/*.zip
+research/agent-assets/*/*.tar
+research/agent-assets/*/*.tar.gz
