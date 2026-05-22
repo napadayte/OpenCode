@@ -1,3 +1,18 @@
 {
-  "note": "Project-level Claude settings. Do not store secrets here."
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./auth.json)",
+      "Read(./tokens)",
+      "Read(./credentials)",
+      "Read(./*.key)",
+      "Read(./*.pem)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf*)",
+      "Bash(sudo*)",
+      "Bash(docker volume rm*)"
+    ]
+  }
 }

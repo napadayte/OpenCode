@@ -1,261 +1,96 @@
+@.claude/rules/dispatch-policy.md
+@.claude/rules/workflow.md
+@.claude/rules/git-operations.md
+@.claude/rules/security.md
+
 # AGENTS.md
 
-------------------------------------------------------------
+This is an agent-ready workspace. It is **not** primarily a coding project.
 
-## Role
+Optimize for: clarity, safety, recoverability, low chaos, manual control, long-term maintainability.
 
-This is an agent-ready workspace.
+## Meaning
 
-It is not primarily a coding project.
+```
+agent   = who performs the task   → .claude/agents/
+skill   = how to perform the task → .claude/skills/<name>/SKILL.md
+rule    = required constraint     → .claude/rules/
+command = reusable slash command  → .claude/commands/
+```
 
-Agents must optimize for:
+## Read on demand (task-specific rules)
 
-- clarity
-- safety
-- recoverability
-- low chaos
-- manual control
-- long-term maintainability
+| If the task involves | Read |
+|---|---|
+| Data, databases, exports, backups, restore | `.claude/rules/data-operations.md` |
+| n8n or automation workflows | `.claude/rules/automation-operations.md` |
+| Scripts, scanners, helper tools | `.claude/rules/light-code-policy.md` |
+| Documentation, README, runbook, ADR | `.claude/rules/document-style.md` |
+| Brainstorm or strategic decisions | `.claude/rules/brainstorm.md` |
+| Planning multi-step work | `.claude/rules/planning.md` |
 
-Small code is allowed only when it supports the workspace.
+## Agents (`.claude/agents/`)
 
-------------------------------------------------------------
+| Agent | Role | Edits? |
+|---|---|---|
+| `planner` | Multi-step plan with risks, verification, rollback | plan files only |
+| `brainstormer` | Option generation before design | no |
+| `devil` | Read-only critic of plans and decisions | no |
+| `reviewer` | Read-only review of pending work | no |
+| `security-reviewer` | Secret / risk audit | no |
+| `data-operator` | Data, databases, exports, backups | yes |
+| `automation-operator` | n8n and automation design + docs | docs only |
+| `git-operator` | Git ops (manual commit / push, never force) | no edits, runs git |
+| `docs-writer` | Workspace documentation | docs only |
+| `light-code-helper` | Small Python / Bash scripts | code only |
 
-## First Action
+## Skills (`.claude/skills/`)
 
-For every non-trivial request:
+| Skill | Purpose |
+|---|---|
+| `brainstorm` | Option-generation procedure with understanding lock |
+| `planning` | Step-by-step plan with verification and rollback |
+| `git-safe-commit` | Inspect → secret scan → manual commit |
+| `data-inventory` | Maintain `data/inventory.md` |
+| `backup-restore` | Backup + verified restore + runbook entry |
+| `n8n-workflow-doc` | Document an n8n workflow safely |
+| `security-check` | Read-only secret + risk audit |
+| `document-writing` | Conventions per doc type |
+| `light-code-script` | Small helper scripts (stdlib first) |
+| `stock-scanner-research` | Research-only scanner (never trades) |
+
+## Commands (`.claude/commands/`)
+
+- `/analyze` — read-only orientation pass
+- `/plan <task>` — produce a plan file under `docs/plans/`
+- `/review` — read-only review of pending diff
+- `/intake <path>` — review a captured external asset
+- `/inventory <asset>` — update `data/inventory.md`
+
+## First action — always
 
 1. Classify the task.
-2. Identify the environment.
-3. Identify affected files, data, tools, or services.
-4. Ask clarification if the target is unclear.
-5. Read the relevant rule files.
-6. Plan before changing files.
+2. Identify the environment (WSL / Docker / Conda / GitHub / OneDrive / Mac / cloud).
+3. Identify affected files, data, tools.
+4. Ask one clarifying question if anything is unclear.
+5. Read the rules listed above that match the task.
+6. Plan before editing.
 
-Do not rush into edits.
+## Safety — non-negotiable
 
-------------------------------------------------------------
+- Do not push.
+- Do not commit unless explicitly requested.
+- Do not run destructive commands without approval.
+- Do not expose secrets, credentials, tokens, auth files.
+- Do not modify data / Docker volumes / n8n storage without a documented backup + restore path.
+- Stop and re-plan on surprise.
 
-## Always Read First
-
-Read these first:
-
-    README.md
-    docs/overview.md
-    docs/runbook.md
-    docs/rules/dispatch-policy.md
-    docs/rules/workflow.md
-
-------------------------------------------------------------
-
-## Read When Relevant
-
-For brainstorm or strategy:
-
-    docs/rules/brainstorm.md
-
-For planning:
-
-    docs/rules/planning.md
-
-For writing documentation:
-
-    docs/rules/document-style.md
-
-For git:
-
-    docs/rules/git-operations.md
-
-For data, databases, exports, backups, or market data:
-
-    docs/rules/data-operations.md
-
-For n8n or automation:
-
-    docs/rules/automation-operations.md
-
-For scripts, scanners, or helper tools:
-
-    docs/rules/light-code-policy.md
-
-For secrets, credentials, APIs, auth, risky commands, or external services:
-
-    docs/rules/security.md
-
-------------------------------------------------------------
-
-## Task Types
-
-Classify tasks as one of:
-
-- brainstorm
-- research
-- planning
-- documentation
-- workspace setup
-- automation
-- n8n workflow
-- data/database
-- backup/recovery
-- git sync
-- light code
-- security review
-- cleanup
-- troubleshooting
-- review
-
-If the task is ambiguous, ask before acting.
-
-------------------------------------------------------------
-
-## Mandatory Planning Triggers
-
-Plan before action when the task involves:
-
-- more than 3 files
-- data or databases
-- backups or restore
-- Docker volumes
-- n8n data
-- credentials or auth files
-- financial data
-- stock scanner logic
-- GitHub sync
-- Windows / WSL / Mac sync
-- automation workflow changes
-- agent rules
-- project templates
-- deleting or moving files
-- installing tools
-- changing global configs
-
-------------------------------------------------------------
-
-## Safety
-
-Do not do these unless explicitly approved by the user:
-
-- push
-- commit
-- force push
-- delete files
-- remove data
-- edit secrets
-- expose credentials
-- change databases
-- touch Docker volumes
-- modify n8n data
-- install global tools
-- run destructive commands
-
-------------------------------------------------------------
-
-## Data Protection
-
-Data/database tasks require:
-
-- data location
-- data sensitivity
-- backup or rollback path
-- restore notes when relevant
-- data inventory update when relevant
-
-Read:
-
-    docs/rules/data-operations.md
-
-------------------------------------------------------------
-
-## Light Code
-
-Small scripts are allowed when useful.
-
-Before writing code, define:
-
-- goal
-- input
-- output
-- run command
-- dependencies
-- risk
-- verification
-
-Read:
-
-    docs/rules/light-code-policy.md
-
-------------------------------------------------------------
-
-## Final Report
+## Final report — always
 
 After any change, report:
-
 - changed files
 - what changed
-- why it changed
+- why
 - how to verify
 - remaining risks
 - next recommended step
-
-------------------------------------------------------------
-
-
-------------------------------------------------------------
-
-## Agents And Skills
-
-This workspace has explicit agent roles and repeatable skills.
-
-Agents live in:
-
-    agents/
-
-Skills live in:
-
-    skills/
-
-Rules live in:
-
-    docs/rules/
-
-Use this meaning:
-
-    agent = who performs the task
-    skill = how to perform the task
-    rule  = required constraint or safety boundary
-
-Before non-trivial work:
-
-1. classify the task
-2. choose relevant agent role
-3. choose relevant skill
-4. read relevant rules
-5. plan before changing files
-
-Common agent roles:
-
-- agents/brainstormer.md
-- agents/planner.md
-- agents/devil.md
-- agents/reviewer.md
-- agents/security-reviewer.md
-- agents/data-operator.md
-- agents/automation-operator.md
-- agents/git-operator.md
-- agents/docs-writer.md
-- agents/light-code-helper.md
-
-Common skills:
-
-- skills/brainstorm.md
-- skills/planning.md
-- skills/security-check.md
-- skills/git-safe-commit.md
-- skills/data-inventory.md
-- skills/backup-restore.md
-- skills/n8n-workflow-doc.md
-- skills/document-writing.md
-- skills/light-code-script.md
-- skills/stock-scanner-research.md
-
-------------------------------------------------------------

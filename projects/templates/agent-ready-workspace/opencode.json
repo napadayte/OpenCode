@@ -1,0 +1,228 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "planner",
+  "instructions": [
+    "AGENTS.md",
+    ".opencode/instructions.md",
+    ".claude/rules/dispatch-policy.md",
+    ".claude/rules/workflow.md"
+  ],
+  "permission": {
+    "*": "ask",
+    "read": "allow",
+    "grep": "allow",
+    "glob": "allow",
+    "lsp": "allow",
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "pwd": "allow",
+      "ls *": "allow",
+      "dir *": "allow",
+      "cat *": "allow",
+      "rg *": "allow",
+      "grep *": "allow",
+      "find *": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "git push*": "deny",
+      "git push --force*": "deny",
+      "git reset --hard*": "deny",
+      "git clean -fd*": "deny",
+      "rm -rf *": "deny",
+      "sudo *": "deny",
+      "docker volume rm*": "deny",
+      "format *": "deny"
+    }
+  },
+  "agent": {
+    "planner": {
+      "description": "Produce a step-by-step plan with risks, verification, rollback. Read .claude/agents/planner.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git push*": "deny"
+        }
+      },
+      "prompt": "Read .claude/agents/planner.md and act as that agent. Follow its restrictions and output format strictly. Never push or commit without explicit user approval."
+    },
+    "brainstormer": {
+      "description": "Generate options and tradeoffs before design. Read .claude/agents/brainstormer.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/brainstormer.md and act as that agent. Read-only. Generate 2-3 options, recommend one, surface tradeoffs and assumptions. Never edit files."
+    },
+    "devil": {
+      "description": "Read-only critic of plans and decisions. Read .claude/agents/devil.md.",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/devil.md and act as that agent. Read-only. Surface specific objections with risk and alternative."
+    },
+    "reviewer": {
+      "description": "Read-only review of pending changes. Read .claude/agents/reviewer.md.",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/reviewer.md and act as that agent. Read-only. Report findings with severity. Do not fix."
+    },
+    "security-reviewer": {
+      "description": "Read-only security audit. Read .claude/agents/security-reviewer.md.",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "rg *": "allow",
+          "grep *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/security-reviewer.md and act as that agent. Read-only. Never print secret values. Report patterns and locations only."
+    },
+    "data-operator": {
+      "description": "Handle data, databases, exports, backups, inventory. Read .claude/agents/data-operator.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git push*": "deny",
+          "rm -rf *": "deny",
+          "docker volume rm*": "deny"
+        }
+      },
+      "prompt": "Read .claude/agents/data-operator.md and act as that agent. Document backups before any destructive change. Update data/inventory.md when assets change."
+    },
+    "git-operator": {
+      "description": "Safe git operations. Read .claude/agents/git-operator.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git branch*": "allow",
+          "git push --force*": "deny",
+          "git reset --hard*": "deny",
+          "git clean -fd*": "deny"
+        }
+      },
+      "prompt": "Read .claude/agents/git-operator.md and act as that agent. Show diffs before commit. Never force-push. Manual approval before push."
+    },
+    "automation-operator": {
+      "description": "Design and document automations. Read .claude/agents/automation-operator.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask"
+        }
+      },
+      "prompt": "Read .claude/agents/automation-operator.md and act as that agent. Document workflow with trigger, actions, credentials (names only), failure modes, recovery."
+    },
+    "docs-writer": {
+      "description": "Workspace documentation. Read .claude/agents/docs-writer.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/docs-writer.md and act as that agent. Follow .claude/rules/document-style.md. Active voice. Scannable. No filler."
+    },
+    "light-code-helper": {
+      "description": "Small Python or Bash scripts. Read .claude/agents/light-code-helper.md.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "python3 *": "ask",
+          "bash *": "ask",
+          "git status*": "allow",
+          "git diff*": "allow"
+        }
+      },
+      "prompt": "Read .claude/agents/light-code-helper.md and act as that agent. Stdlib first. No new dependency without justification. No secrets in code."
+    }
+  },
+  "command": {
+    "analyze": {
+      "description": "Read-only orientation pass",
+      "agent": "planner",
+      "template": "Follow the instructions in .claude/commands/analyze.md. Read AGENTS.md and the files it references. Do not edit anything."
+    },
+    "plan": {
+      "description": "Produce a safe step-by-step plan",
+      "agent": "planner",
+      "template": "Follow the instructions in .claude/commands/plan.md for this task: $ARGUMENTS"
+    },
+    "review": {
+      "description": "Read-only review of pending changes",
+      "agent": "reviewer",
+      "subtask": true,
+      "template": "Follow the instructions in .claude/commands/review.md. Report findings with severity. Do not fix."
+    },
+    "intake": {
+      "description": "Review a captured external asset",
+      "agent": "planner",
+      "template": "Follow the instructions in .claude/commands/intake.md for this asset folder: $ARGUMENTS"
+    },
+    "inventory": {
+      "description": "Update data/inventory.md with an asset",
+      "agent": "data-operator",
+      "template": "Follow the instructions in .claude/commands/inventory.md for this asset: $ARGUMENTS"
+    },
+    "fix": {
+      "description": "Implement an approved plan",
+      "agent": "planner",
+      "template": "Implement the change described in: $ARGUMENTS. First read the matching plan in docs/plans/ if present. Make small, reviewable changes. Show diff and verification after."
+    }
+  },
+  "tool_output": {
+    "max_lines": 200,
+    "max_bytes": 12000
+  },
+  "compaction": {
+    "auto": true,
+    "tail_turns": 15
+  },
+  "share": "manual",
+  "autoupdate": "notify"
+}

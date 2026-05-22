@@ -1,125 +1,85 @@
 # Workspace Name
 
-------------------------------------------------------------
+Agent-ready workspace. Document-first, operations-first, safety-first.
 
-## Purpose
+Suitable for: documentation, planning, research, brainstorms, n8n workflows, data and database inventory, backup/recovery notes, prompts, checklists, reports, small helper scripts, lightweight scanners.
 
-This is an agent-ready workspace.
+Not primarily a coding project. Small code is allowed when it supports the workspace.
 
-It is designed for:
+## Status
 
-- documentation
-- planning
-- research
-- brainstorms
-- automation notes
-- n8n workflows
-- data and database inventory
-- backup and recovery notes
-- prompts
-- checklists
-- reports
-- small helper scripts
-- lightweight scanners and tools
+```
+Draft
+```
 
-This is not primarily a coding project.
+Fill with: what this workspace is for, what's active, what's blocked, what needs review.
 
-Small code is allowed when it supports the workspace.
-
-------------------------------------------------------------
-
-## Current Status
-
-Status:
-
-    Draft
-
-Fill this section with:
-
-- what this workspace is for
-- what is active now
-- what is blocked
-- what needs review
-
-------------------------------------------------------------
-
-## Main Documents
+## Main documents
 
 Start here:
 
-    AGENTS.md
-    docs/overview.md
-    docs/runbook.md
-    docs/rules/dispatch-policy.md
-    docs/rules/workflow.md
+- `AGENTS.md` — shared contract loaded by every shell
+- `docs/overview.md` — what this workspace is for
+- `docs/runbook.md` — routine operations and recovery
+- `.claude/rules/dispatch-policy.md` — how tasks are classified
+- `.claude/rules/workflow.md` — workflow pipeline
 
-Important rule files:
+Other rules in `.claude/rules/`. Agents in `.claude/agents/`. Skills in `.claude/skills/`. Slash commands in `.claude/commands/`.
 
-    docs/rules/brainstorm.md
-    docs/rules/planning.md
-    docs/rules/document-style.md
-    docs/rules/git-operations.md
-    docs/rules/data-operations.md
-    docs/rules/automation-operations.md
-    docs/rules/light-code-policy.md
-    docs/rules/security.md
+## Folders
 
-------------------------------------------------------------
+| Folder | What lives here |
+|---|---|
+| `docs/` | Overview, runbook, decisions (ADR), plans, reports |
+| `.claude/` | Agents, skills, rules, commands, settings (canonical content) |
+| `research/` | Research notes and source summaries |
+| `notes/` | Informal notes |
+| `prompts/` | Reusable prompts |
+| `checklists/` | Repeatable checklists |
+| `automations/` | Automation and n8n workflow documentation |
+| `data/` | Data inventory, schemas, local exports, backups |
+| `tools/` | Small scripts, scanners, helper tools |
 
-## Main Folders
+## Safe first prompt
 
-    docs/           Operating documentation and rules
-    research/       Research notes and source summaries
-    notes/          Informal notes
-    prompts/        Reusable prompts
-    checklists/     Repeatable checklists
-    automations/    Automation and n8n documentation
-    data/           Data inventory, schemas, local exports, backups
-    tools/          Small scripts, scanners, helper tools
+```
+Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, .claude/rules/dispatch-policy.md, and .claude/rules/workflow.md. Summarize structure, risks, and next steps.
+```
 
-------------------------------------------------------------
+Or run `/analyze` for the same orientation.
 
-## Safe First Prompt
+## Daily workflow
 
-Use this with any agent shell:
-
-    Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, and docs/rules/workflow.md. Summarize the structure, risks, and next steps.
-
-------------------------------------------------------------
-
-## Daily Workflow
-
-Before changes:
-
-    git status
+```
+git status        # before
+opencode          # or claude / codex / gemini
+  /analyze        # orient
+  /plan <task>    # produce plan in docs/plans/
+  /fix <task>     # implement an approved plan
+  /review         # read-only review of pending diff
+git status        # after
+git diff
+# commit manually only after review
+```
 
 For non-trivial work:
 
 1. Classify the task.
-2. Brainstorm if needed.
-3. Plan before changes.
+2. Brainstorm if architecture / automation / scanner choice.
+3. Plan before changes (`/plan`).
 4. Make small changes.
-5. Review.
-6. Check git status and diff.
+5. Review (`/review`).
+6. Check `git status` and `git diff`.
 7. Commit manually only when ready.
 
-------------------------------------------------------------
+## Never commit
 
-## Never Commit
-
-Never commit:
-
-- secrets
-- credentials
-- tokens
-- API keys
-- auth files
-- local database files
+- secrets, credentials, tokens, API keys
+- auth files (`auth.json`, `*.key`, `*.pem`)
+- local database files (`*.sqlite`, `*.db`)
 - database dumps
 - exports with private data
 - backup archives
 - Docker volume backups
 - n8n data backups
 - broker credentials
-
-------------------------------------------------------------
