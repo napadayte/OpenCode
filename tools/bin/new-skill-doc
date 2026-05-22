@@ -20,9 +20,10 @@ case "$SLUG" in
     ;;
 esac
 
+# Find workspace root.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && [ -d "$ROOT/docs" ]; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -34,7 +35,10 @@ if [ "$ROOT" = "/" ]; then
   exit 1
 fi
 
-TARGET="$ROOT/skills/$SLUG.md"
+# Skills live in .claude/skills/<slug>/SKILL.md (one directory per skill so the
+# skill can later grow references/, examples/, supporting files).
+SKILL_DIR="$ROOT/.claude/skills/$SLUG"
+TARGET="$SKILL_DIR/SKILL.md"
 
 if [ -e "$TARGET" ]; then
   echo "Skill already exists:"
@@ -42,81 +46,59 @@ if [ -e "$TARGET" ]; then
   exit 1
 fi
 
-mkdir -p "$ROOT/skills"
+mkdir -p "$SKILL_DIR"
 
-TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}') Skill"
+TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}')"
 
 cat > "$TARGET" <<EOF2
+---
+name: $SLUG
+description: "<one sentence purpose>. Use when: <triggers>. На русском: <ru triggers>. Українською: <ua triggers>."
+allowed-tools: Read, Glob, Grep
+risk: unknown
+source: workspace
+---
+
 # $TITLE
 
-------------------------------------------------------------
+## When to use
 
-## Purpose
+- <concrete trigger 1>
+- <concrete trigger 2>
 
-Describe what this skill helps to do.
+## Inputs needed
 
-------------------------------------------------------------
+Identify before starting:
 
-## When To Use
+- <input 1>
+- <input 2>
 
-Use this skill when:
+## Procedure
 
-- condition 1
-- condition 2
-- condition 3
+### 1. <First step>
+<What to do, with concrete command or check.>
 
-------------------------------------------------------------
+### 2. <Second step>
+<...>
 
-## Inputs Needed
+### 3. <Verification>
+<How to know it worked.>
 
-Ask for:
+## Output
 
-- goal
-- environment
-- affected files
-- affected data
-- risks
-- expected output
+- <what the skill produces>
+- <where it lands>
 
-------------------------------------------------------------
+## Restrictions
 
-## Steps
-
-1. Classify the task.
-2. Read relevant rules.
-3. Identify affected files and data.
-4. Identify risks.
-5. Create a plan.
-6. Execute only approved actions.
-7. Verify result.
-8. Report result.
-
-------------------------------------------------------------
-
-## Output Format
-
-Return:
-
-- summary
-- steps
-- affected files
-- affected data
-- risks
-- verification
-- next step
-
-------------------------------------------------------------
-
-## Safety Rules
-
-- do not expose secrets
-- do not delete data without approval
-- do not commit unless requested
-- do not push unless requested
-- stop when uncertain
-
-------------------------------------------------------------
+- <safety rule 1>
+- <safety rule 2>
 EOF2
 
 echo "Created skill:"
 echo "  $TARGET"
+echo
+echo "Next steps:"
+echo "  1. Fill the YAML frontmatter (risk: high for data/backup/external)."
+echo "  2. Write a DISTINCT, concrete procedure — not generic boilerplate."
+echo "  3. Update AGENTS.md and .claude/skills/README.md."

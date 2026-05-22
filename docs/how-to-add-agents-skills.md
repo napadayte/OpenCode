@@ -1,181 +1,140 @@
 # How To Add Agents And Skills
 
-------------------------------------------------------------
+## Meaning
 
-## 1. Meaning
+```
+agent   = who performs the task     → .claude/agents/<slug>.md
+skill   = how to perform the task   → .claude/skills/<slug>/SKILL.md
+rule    = required constraint       → .claude/rules/<slug>.md
+command = reusable slash command    → .claude/commands/<slug>.md
+```
 
-Agent:
-
-    who performs the task
-
-Skill:
-
-    how to perform the task
-
-Rule:
-
-    required constraint or safety boundary
-
-------------------------------------------------------------
-
-## 2. Where They Live
+## Where they live
 
 In every generated workspace:
 
-    agents/
-    skills/
-    docs/rules/
+```
+.claude/
+├── agents/<slug>.md
+├── skills/<slug>/SKILL.md     # subdirectory so skills can grow
+│                              # references/, examples/, supporting files
+├── rules/<slug>.md
+├── commands/<slug>.md
+└── settings.json
+```
 
-In the global OpenCode config repo:
+In the global OpenCode config repo (this repo) — same layout under `projects/templates/agent-ready-workspace/.claude/`.
 
-    ~/.config/opencode
-
-Template path:
-
-    ~/.config/opencode/projects/templates/agent-ready-workspace
-
-------------------------------------------------------------
-
-## 3. How To Add Agent Manually
+## Add an agent
 
 Inside a workspace:
 
-    new-agent-doc <agent-slug>
+```
+new-agent-doc <slug>
+```
 
-Example:
+Creates a skeleton at `.claude/agents/<slug>.md` with YAML frontmatter and placeholders.
 
-    new-agent-doc security-reviewer
+Then:
 
-Then edit:
+1. Fill the YAML frontmatter. Explicit `tools:` whitelist (principle of least privilege). Read-only agents (critics, reviewers) get only `Read, Glob, Grep, SendMessage`.
+2. Write the body: purpose, when to use, restrictions, output format.
+3. Mention the agent in `AGENTS.md` and `.claude/agents/README.md` so it's discoverable.
+4. If OpenCode should know it, add an entry under `agent` in workspace `opencode.json` — set the agent's `prompt:` to `"Read .claude/agents/<slug>.md and act as that agent."`
 
-    agents/security-reviewer.md
-
-Also mention the agent in:
-
-    AGENTS.md
-    docs/rules/dispatch-policy.md
-
-------------------------------------------------------------
-
-## 4. How To Add Skill Manually
+## Add a skill
 
 Inside a workspace:
 
-    new-skill-doc <skill-slug>
+```
+new-skill-doc <slug>
+```
 
-Example:
+Creates `.claude/skills/<slug>/SKILL.md` with YAML frontmatter and placeholders.
 
-    new-skill-doc n8n-workflow-doc
+Then:
 
-Then edit:
+1. Fill the YAML frontmatter. `risk: high` for procedures touching data, backups, or external services.
+2. Write a **distinct, concrete procedure** — not generic 8-step boilerplate. If your skill's steps could be copy-pasted into another skill, you don't have a new skill.
+3. Mention the skill in `AGENTS.md` and `.claude/skills/README.md`.
 
-    skills/n8n-workflow-doc.md
+## Capture useful external ideas
 
-Also mention the skill in:
+If you find useful agent rules, workflow notes, or skills in a file you downloaded or were shared:
 
-    AGENTS.md
-    CLAUDE.md
-    GEMINI.md
-    .opencode/instructions.md
-    .codex/config.toml
+```
+capture-agent-asset <source-file> [asset-name]
+```
 
-------------------------------------------------------------
+This:
 
-## 5. How To Capture Useful External Ideas
+1. Copies the source to `research/agent-assets/<date>_<name>/source.<ext>` (gitignored).
+2. Creates `review.md` with a classification scaffold.
+3. Runs a secret-pattern scan and writes results to `secret-scan.txt` if any patterns matched.
+4. Suggests the type (agent / skill / mixed / with-rules).
 
-If you find useful agent rules, workflow notes, or skills in a file:
+The source is **untrusted intake material**. Do not blindly copy it into the workspace.
 
-    capture-agent-asset <source-file> [asset-name]
+## Intake workflow
 
-Example:
+1. **Capture** via `capture-agent-asset`.
+2. **Address secret findings first.** If `secret-scan.txt` exists, treat the source as compromised intake — review the patterns and remove sensitive lines before any further use.
+3. **Read** `review.md`.
+4. **Analyze** with an agent: `/intake research/agent-assets/<date>_<slug>` (the slash command runs the structured extraction).
+5. **Extract** only reusable ideas.
+6. **Rewrite** in workspace style — short, scannable, concrete steps. No vague filler.
+7. **Promote** manually to `.claude/agents/`, `.claude/skills/<slug>/SKILL.md`, or `.claude/rules/`.
+8. **Check** `git diff`.
+9. **Commit** manually.
 
-    capture-agent-asset ~/Downloads/claude-rules.md claude-rules
+## What to look for
 
-This creates:
+Useful patterns in external content:
 
-    research/agent-assets/<date>_<name>/review.md
-    research/agent-assets/<date>_<name>/source.*
+- "You are..." → potential agent role
+- "When to use..." → potential skill or trigger condition
+- "Workflow:" / "Pipeline:" / "Steps:" → procedure to extract
+- "Output format:" → response shape
+- "Ask before..." / "Never..." / "Stop when..." → safety rule
+- "Review checklist:" → checklist candidate
+- "Rollback:" → recovery step
 
-The source is treated as raw intake material.
+## What to reject
 
-Do not blindly copy it into the system.
-
-------------------------------------------------------------
-
-## 6. Intake Workflow
-
-1. Capture the source.
-2. Read review.md.
-3. Ask an agent to analyze the source.
-4. Extract only reusable ideas.
-5. Rewrite in our style.
-6. Add as agent, skill, or rule.
-7. Check git diff.
-8. Commit manually.
-
-------------------------------------------------------------
-
-## 7. What To Look For
-
-Useful patterns:
-
-- You are...
-- Use this agent when...
-- Workflow:
-- Pipeline:
-- Steps:
-- Output format:
-- Ask before...
-- Never...
-- Stop when...
-- Review checklist:
-- Security checklist:
-- Rollback:
-- Edge cases:
-
-------------------------------------------------------------
-
-## 8. What To Reject
-
-Reject:
-
-- framework-specific rules that are not needed
-- coding-only rules when the workspace is not coding-focused
+- framework-specific rules that don't apply
+- coding-only rules in a docs-focused workspace
 - automatic commit or push behavior
-- unsafe destructive behavior
+- destructive shortcuts (`rm -rf`, force push, etc.)
 - vague motivational text
-- copied large external text
+- copied large external text without rewriting
 - secret-handling mistakes
 
-------------------------------------------------------------
-
-## 9. Promotion Rule
+## Promotion rule
 
 Promote only if the idea is:
 
 - reusable
 - safer than current behavior
 - clear
-- not too specific
-- compatible with docs/data/automation work
+- not too narrow
+- compatible with docs / data / automation work
+- written in workspace style after rewrite
 
-------------------------------------------------------------
-
-## 10. Git Rule
+## Git rule
 
 Before commit:
 
-    git status
-    git diff
+```
+git status
+git diff
+```
 
-Do not commit:
+Never commit:
 
 - secrets
 - credentials
 - auth files
-- raw private source material
+- raw private source material (already gitignored under `research/agent-assets/*/source.*`)
 - backups
 - exports
 - databases
-
-------------------------------------------------------------

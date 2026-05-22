@@ -20,9 +20,10 @@ case "$SLUG" in
     ;;
 esac
 
+# Find workspace root: nearest parent with AGENTS.md and either .claude/ or docs/.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && [ -d "$ROOT/docs" ]; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -34,7 +35,9 @@ if [ "$ROOT" = "/" ]; then
   exit 1
 fi
 
-TARGET="$ROOT/agents/$SLUG.md"
+# Canonical location for agents in a workspace.
+mkdir -p "$ROOT/.claude/agents"
+TARGET="$ROOT/.claude/agents/$SLUG.md"
 
 if [ -e "$TARGET" ]; then
   echo "Agent already exists:"
@@ -42,38 +45,32 @@ if [ -e "$TARGET" ]; then
   exit 1
 fi
 
-mkdir -p "$ROOT/agents"
-
-TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}') Agent"
+TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}')"
 
 cat > "$TARGET" <<EOF2
-# $TITLE
+---
+name: $SLUG
+description: "<one sentence purpose>. Use when: <triggers>. На русском: <ru triggers>. Українською: <ua triggers>."
+model: sonnet
+color: gray
+tools:
+  - Read
+  - Glob
+  - Grep
+  - SendMessage
+---
 
-------------------------------------------------------------
+# $TITLE
 
 ## Purpose
 
-Describe what this agent is responsible for.
+<Describe what this agent is responsible for.>
 
-------------------------------------------------------------
+## When to use
 
-## Use When
-
-Use this agent when:
-
-- condition 1
-- condition 2
-- condition 3
-
-------------------------------------------------------------
-
-## Responsibilities
-
-- responsibility 1
-- responsibility 2
-- responsibility 3
-
-------------------------------------------------------------
+- <condition 1>
+- <condition 2>
+- <condition 3>
 
 ## Restrictions
 
@@ -85,9 +82,7 @@ This agent must not:
 - expose secrets
 - run destructive commands
 
-------------------------------------------------------------
-
-## Output Format
+## Output format
 
 Return:
 
@@ -96,9 +91,13 @@ Return:
 - risks
 - recommendation
 - next step
-
-------------------------------------------------------------
 EOF2
 
 echo "Created agent:"
 echo "  $TARGET"
+echo
+echo "Next steps:"
+echo "  1. Fill the YAML frontmatter (tools: whitelist — least privilege)."
+echo "  2. Replace placeholders in the body."
+echo "  3. Update AGENTS.md and .claude/agents/README.md so the role is discoverable."
+echo "  4. If OpenCode should know it, add an entry under \"agent\" in opencode.json."

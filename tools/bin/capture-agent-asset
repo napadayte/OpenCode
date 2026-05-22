@@ -18,9 +18,10 @@ if [ ! -f "$SOURCE" ]; then
   exit 1
 fi
 
+# Find workspace root.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && [ -d "$ROOT/docs" ]; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -54,6 +55,7 @@ mkdir -p "$DIR"
 EXT="${SOURCE##*.}"
 cp "$SOURCE" "$DIR/source.$EXT"
 
+# Lightweight type-hint heuristic on the source.
 TYPE="mixed"
 if grep -Eiq 'you are|agent|role|responsibilities' "$SOURCE"; then
   TYPE="agent-candidate"
@@ -69,14 +71,24 @@ if grep -Eiq 'never|do not|ask before|dangerous|secrets|credentials' "$SOURCE"; 
   TYPE="$TYPE-with-rules"
 fi
 
+# Secret scan — flag, never print, names of patterns only.
+SECRET_PATTERNS='(api[_-]?key|secret|token|password|bearer|authorization|client[_-]?secret|aws[_-]?(access|secret)|openai[_-]?api[_-]?key|anthropic[_-]?api[_-]?key|BEGIN[[:space:]]+(RSA|EC|DSA|OPENSSH|PRIVATE)[[:space:]]+KEY|postgres://[^/[:space:]]*:[^@[:space:]]*@|mysql://[^/[:space:]]*:[^@[:space:]]*@|mongodb(\+srv)?://[^/[:space:]]*:[^@[:space:]]*@|https://hooks\.slack\.com/services/|https://discord\.com/api/webhooks/)'
+
+SECRET_HITS_FILE="$DIR/secret-scan.txt"
+if grep -EnI -i "$SECRET_PATTERNS" "$SOURCE" > "$SECRET_HITS_FILE" 2>/dev/null; then
+  SECRET_COUNT=$(wc -l < "$SECRET_HITS_FILE" | tr -d ' ')
+  SECRET_STATUS="WARNING — $SECRET_COUNT potential secret pattern hit(s). See secret-scan.txt. Do NOT promote until reviewed."
+else
+  rm -f "$SECRET_HITS_FILE"
+  SECRET_STATUS="No obvious secret patterns matched (still inspect manually)."
+fi
+
 cat > "$DIR/review.md" <<EOF2
 # Agent Asset Review
 
-------------------------------------------------------------
-
 ## Source
 
-Local source file:
+Local source file (gitignored):
 
     source.$EXT
 
@@ -88,7 +100,9 @@ Suggested type:
 
     $TYPE
 
-------------------------------------------------------------
+## Secret scan
+
+    $SECRET_STATUS
 
 ## Decision
 
@@ -100,9 +114,7 @@ Decision:
 
     keep / reject / promote-agent / promote-skill / promote-rule / split
 
-------------------------------------------------------------
-
-## What To Extract
+## What to extract
 
 Look for:
 
@@ -116,9 +128,7 @@ Look for:
 - stop conditions
 - edge cases
 
-------------------------------------------------------------
-
-## What To Reject
+## What to reject
 
 Reject:
 
@@ -131,53 +141,29 @@ Reject:
 - destructive behavior
 - copied text that should be rewritten
 
-------------------------------------------------------------
+## Promotion targets
 
-## Promotion Targets
+Possible targets in this workspace:
 
-Possible targets:
+    .claude/agents/<slug>.md
+    .claude/skills/<slug>/SKILL.md
+    .claude/rules/<slug>.md
+    .claude/commands/<slug>.md
+    checklists/<slug>.md
 
-    agents/
-    skills/
-    docs/rules/
-    docs/how-to-add-agents-skills.md
+## Extraction prompt
 
-------------------------------------------------------------
+Run \`/intake research/agent-assets/${DATE}_${SLUG}\` in OpenCode or Claude Code,
+or use this manual prompt:
 
-## Extraction Prompt
-
-Use this prompt with an agent:
-
-Analyze research/agent-assets/${DATE}_${SLUG}/source.$EXT.
-
-Do not edit files.
-
-Extract only reusable ideas useful for this workspace.
-
-Classify each useful item as one of:
-
-- agent
-- skill
-- rule
-- checklist
-- workflow
-- reject
-
-For each useful item, return:
-
-- type
-- proposed name
-- why useful
-- where it should go
-- rewritten content in our style
-- risks
-- recommendation
-
-Do not copy large external text directly.
-
-Do not include secrets.
-
-------------------------------------------------------------
+> Analyze research/agent-assets/${DATE}_${SLUG}/source.$EXT.
+> Do not edit files.
+> Extract only reusable ideas useful for this workspace.
+> Classify each useful item as one of: agent / skill / rule / checklist / workflow / reject.
+> For each useful item, return: type, proposed name, why useful, where it should go,
+> rewritten content in our style, risks, recommendation.
+> Do not copy large external text directly.
+> Do not include secrets.
 EOF2
 
 echo "Captured agent asset:"
@@ -186,9 +172,16 @@ echo
 echo "Review file:"
 echo "  $DIR/review.md"
 echo
-echo "Raw source is copied as:"
+echo "Raw source (gitignored as research/agent-assets/*/source.*):"
 echo "  $DIR/source.$EXT"
 echo
+echo "Secret scan:"
+echo "  $SECRET_STATUS"
+echo
 echo "Next:"
-echo "  open $DIR/review.md"
-echo "  run an agent review using the Extraction Prompt"
+echo "  1. open $DIR/review.md"
+echo "  2. Address any secret-scan findings before any further action."
+echo "  3. Run /intake on the folder, or use the extraction prompt manually."
+echo "  4. Promotion to .claude/ is MANUAL after user approval."
+echo
+echo "Run git status to confirm only research/agent-assets/*/review.md is tracked."
