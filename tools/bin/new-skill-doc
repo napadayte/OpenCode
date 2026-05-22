@@ -23,7 +23,7 @@ esac
 # Find workspace root.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.opencode" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -35,9 +35,9 @@ if [ "$ROOT" = "/" ]; then
   exit 1
 fi
 
-# Skills live in .claude/skills/<slug>/SKILL.md (one directory per skill so the
+# Skills live in .opencode/skills/<slug>/SKILL.md (one directory per skill so the
 # skill can later grow references/, examples/, supporting files).
-SKILL_DIR="$ROOT/.claude/skills/$SLUG"
+SKILL_DIR="$ROOT/.opencode/skills/$SLUG"
 TARGET="$SKILL_DIR/SKILL.md"
 
 if [ -e "$TARGET" ]; then
@@ -101,4 +101,4 @@ echo
 echo "Next steps:"
 echo "  1. Fill the YAML frontmatter (risk: high for data/backup/external)."
 echo "  2. Write a DISTINCT, concrete procedure — not generic boilerplate."
-echo "  3. Update AGENTS.md and .claude/skills/README.md."
+echo "  3. Update AGENTS.md and .opencode/skills/README.md."

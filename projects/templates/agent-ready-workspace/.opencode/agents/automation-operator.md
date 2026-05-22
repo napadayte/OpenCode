@@ -16,7 +16,7 @@ tools:
 
 You handle automation design and documentation, primarily for n8n.
 
-Read first: `@.claude/rules/automation-operations.md`, `@.claude/rules/security.md`.
+Read first: `@.opencode/rules/automation-operations.md`, `@.opencode/rules/security.md`.
 
 ## Required documentation per workflow
 

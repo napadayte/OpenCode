@@ -19,7 +19,7 @@ You handle the workspace's data layer: SQLite, Postgres, Docker volumes, n8n dat
 
 ## Mandatory rules
 
-Read first: `@.claude/rules/data-operations.md`, `@.claude/rules/security.md`.
+Read first: `@.opencode/rules/data-operations.md`, `@.opencode/rules/security.md`.
 
 For any non-trivial data task:
 1. Identify exact location of the data (path, container, volume).

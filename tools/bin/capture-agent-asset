@@ -21,7 +21,7 @@ fi
 # Find workspace root.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.opencode" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -145,10 +145,10 @@ Reject:
 
 Possible targets in this workspace:
 
-    .claude/agents/<slug>.md
-    .claude/skills/<slug>/SKILL.md
-    .claude/rules/<slug>.md
-    .claude/commands/<slug>.md
+    .opencode/agents/<slug>.md
+    .opencode/skills/<slug>/SKILL.md
+    .opencode/rules/<slug>.md
+    .opencode/commands/<slug>.md
     checklists/<slug>.md
 
 ## Extraction prompt
@@ -182,6 +182,6 @@ echo "Next:"
 echo "  1. open $DIR/review.md"
 echo "  2. Address any secret-scan findings before any further action."
 echo "  3. Run /intake on the folder, or use the extraction prompt manually."
-echo "  4. Promotion to .claude/ is MANUAL after user approval."
+echo "  4. Promotion to .opencode/ is MANUAL after user approval."
 echo
 echo "Run git status to confirm only research/agent-assets/*/review.md is tracked."

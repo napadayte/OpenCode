@@ -9,8 +9,8 @@ Read these files in order — do not edit anything:
 - `AGENTS.md`
 - `docs/overview.md`
 - `docs/runbook.md`
-- `.claude/rules/dispatch-policy.md`
-- `.claude/rules/workflow.md`
+- `.opencode/rules/dispatch-policy.md`
+- `.opencode/rules/workflow.md`
 - `data/inventory.md` (if present)
 
 Summarize:

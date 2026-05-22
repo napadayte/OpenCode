@@ -36,5 +36,5 @@ Then the body describes purpose, when to use, restrictions, output format.
 
 1. Run `new-agent-doc <slug>` from inside the workspace (skeleton creator).
 2. Fill the YAML frontmatter — explicit `tools:` whitelist (principle of least privilege).
-3. Update `AGENTS.md` and `.claude/agents/README.md` so the new role is discoverable.
+3. Update `AGENTS.md` and `.opencode/agents/README.md` so the new role is discoverable.
 4. If OpenCode should know it, add an entry under `agent` in `opencode.json`.

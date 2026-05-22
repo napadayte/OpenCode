@@ -8,10 +8,10 @@ Follow `AGENTS.md` — same rules and structure apply.
 - `README.md`
 - `docs/overview.md`
 - `docs/runbook.md`
-- `.claude/rules/dispatch-policy.md`
-- `.claude/rules/workflow.md`
+- `.opencode/rules/dispatch-policy.md`
+- `.opencode/rules/workflow.md`
 
-Task-specific rules in `.claude/rules/`. Agent roles in `.claude/agents/`. Reusable skills in `.claude/skills/`. Slash commands in `.claude/commands/`.
+Task-specific rules in `.opencode/rules/`. Agent roles in `.opencode/agents/`. Reusable skills in `.opencode/skills/`. Slash commands in `.opencode/commands/`.
 
 ## Recommended flow
 

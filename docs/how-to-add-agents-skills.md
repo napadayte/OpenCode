@@ -3,10 +3,10 @@
 ## Meaning
 
 ```
-agent   = who performs the task     → .claude/agents/<slug>.md
-skill   = how to perform the task   → .claude/skills/<slug>/SKILL.md
-rule    = required constraint       → .claude/rules/<slug>.md
-command = reusable slash command    → .claude/commands/<slug>.md
+agent   = who performs the task     → .opencode/agents/<slug>.md
+skill   = how to perform the task   → .opencode/skills/<slug>/SKILL.md
+rule    = required constraint       → .opencode/rules/<slug>.md
+command = reusable slash command    → .opencode/commands/<slug>.md
 ```
 
 ## Where they live
@@ -14,16 +14,20 @@ command = reusable slash command    → .claude/commands/<slug>.md
 In every generated workspace:
 
 ```
-.claude/
+.opencode/
+├── instructions.md          loaded by OpenCode automatically
 ├── agents/<slug>.md
-├── skills/<slug>/SKILL.md     # subdirectory so skills can grow
-│                              # references/, examples/, supporting files
+├── skills/<slug>/SKILL.md   subdirectory per skill (can grow references/, examples/)
 ├── rules/<slug>.md
-├── commands/<slug>.md
-└── settings.json
+└── commands/<slug>.md
+
+.claude/
+└── settings.json            Claude Code runtime permissions only
 ```
 
-In the global OpenCode config repo (this repo) — same layout under `projects/templates/agent-ready-workspace/.claude/`.
+OpenCode is the primary runtime → all content lives under `.opencode/`. `.claude/` keeps only `settings.json` (Claude-specific permissions like denying `Read(./.env)`).
+
+In the global config repo: same layout under `projects/templates/agent-ready-workspace/`.
 
 ## Add an agent
 
@@ -33,34 +37,77 @@ Inside a workspace:
 new-agent-doc <slug>
 ```
 
-Creates a skeleton at `.claude/agents/<slug>.md` with YAML frontmatter and placeholders.
+Creates a skeleton at `.opencode/agents/<slug>.md` with YAML frontmatter and placeholders.
 
 Then:
 
-1. Fill the YAML frontmatter. Explicit `tools:` whitelist (principle of least privilege). Read-only agents (critics, reviewers) get only `Read, Glob, Grep, SendMessage`.
+1. Fill the YAML frontmatter. Explicit `tools:` whitelist (least privilege). Read-only agents get only `Read, Glob, Grep, SendMessage`.
 2. Write the body: purpose, when to use, restrictions, output format.
-3. Mention the agent in `AGENTS.md` and `.claude/agents/README.md` so it's discoverable.
-4. If OpenCode should know it, add an entry under `agent` in workspace `opencode.json` — set the agent's `prompt:` to `"Read .claude/agents/<slug>.md and act as that agent."`
+3. Mention the agent in `AGENTS.md` and `.opencode/agents/README.md` so it's discoverable.
+4. Add an entry under `agent` in workspace `opencode.json` so OpenCode loads it. The agent's `prompt:` is `"Read .opencode/agents/<slug>.md and act as that agent."`
 
 ## Add a skill
-
-Inside a workspace:
 
 ```
 new-skill-doc <slug>
 ```
 
-Creates `.claude/skills/<slug>/SKILL.md` with YAML frontmatter and placeholders.
+Creates `.opencode/skills/<slug>/SKILL.md` with YAML frontmatter and placeholders.
 
 Then:
 
 1. Fill the YAML frontmatter. `risk: high` for procedures touching data, backups, or external services.
-2. Write a **distinct, concrete procedure** — not generic 8-step boilerplate. If your skill's steps could be copy-pasted into another skill, you don't have a new skill.
-3. Mention the skill in `AGENTS.md` and `.claude/skills/README.md`.
+2. Write a **distinct, concrete procedure** — not generic boilerplate. If your skill's steps could be copy-pasted into another skill, you don't have a new skill.
+3. Mention the skill in `AGENTS.md` and `.opencode/skills/README.md`.
+
+## How to make Claude Code see them too
+
+Claude Code looks by default in `.claude/agents/`, `.claude/skills/<slug>/SKILL.md`, `.claude/commands/`. Our content lives in `.opencode/`, so Claude's agent / skill picker UI won't list the workspace's agents unless we mirror them.
+
+Three ways, simplest first.
+
+### Option 1 — Just use Claude through prompts (default, no mirroring)
+
+Open Claude in the workspace and tell it which file to read:
+
+```
+Read .opencode/agents/planner.md and act as that agent.
+```
+
+This always works. No mirroring needed. The only downside: Claude's picker UI won't list the workspace's agents.
+
+### Option 2 — Symlinks (Linux / macOS / WSL)
+
+Make `.claude/agents` etc. point to `.opencode/agents` etc. Run once inside a workspace:
+
+```bash
+ln -s ../.opencode/agents   .claude/agents
+ln -s ../.opencode/skills   .claude/skills
+ln -s ../.opencode/commands .claude/commands
+ln -s ../.opencode/rules    .claude/rules
+```
+
+Claude Code now sees everything in its expected locations. One source of truth — edits go only to `.opencode/`. Commit the symlinks (git tracks them).
+
+On plain Windows (without WSL), symlinks need admin or Developer Mode — usually skip Option 2 there.
+
+### Option 3 — Copy (works everywhere, including plain Windows)
+
+Copy the four folders once, re-copy when content changes. Inside a workspace:
+
+```bash
+rm -rf .claude/agents .claude/skills .claude/commands .claude/rules
+cp -r  .opencode/agents   .claude/agents
+cp -r  .opencode/skills   .claude/skills
+cp -r  .opencode/commands .claude/commands
+cp -r  .opencode/rules    .claude/rules
+```
+
+Drift risk: every edit in `.opencode/` must be re-copied to `.claude/`. Worth it only if you use Claude's picker heavily and can't use symlinks.
 
 ## Capture useful external ideas
 
-If you find useful agent rules, workflow notes, or skills in a file you downloaded or were shared:
+If you find useful agent rules, workflow notes, or skills in a file:
 
 ```
 capture-agent-asset <source-file> [asset-name]
@@ -70,7 +117,7 @@ This:
 
 1. Copies the source to `research/agent-assets/<date>_<name>/source.<ext>` (gitignored).
 2. Creates `review.md` with a classification scaffold.
-3. Runs a secret-pattern scan and writes results to `secret-scan.txt` if any patterns matched.
+3. Runs a secret-pattern scan, writes results to `secret-scan.txt` if any matched.
 4. Suggests the type (agent / skill / mixed / with-rules).
 
 The source is **untrusted intake material**. Do not blindly copy it into the workspace.
@@ -78,18 +125,16 @@ The source is **untrusted intake material**. Do not blindly copy it into the wor
 ## Intake workflow
 
 1. **Capture** via `capture-agent-asset`.
-2. **Address secret findings first.** If `secret-scan.txt` exists, treat the source as compromised intake — review the patterns and remove sensitive lines before any further use.
+2. **Address secret findings first.** If `secret-scan.txt` exists, treat the source as compromised — review patterns, remove sensitive lines before any further use.
 3. **Read** `review.md`.
-4. **Analyze** with an agent: `/intake research/agent-assets/<date>_<slug>` (the slash command runs the structured extraction).
+4. **Analyze** with an agent: `/intake research/agent-assets/<date>_<slug>`.
 5. **Extract** only reusable ideas.
 6. **Rewrite** in workspace style — short, scannable, concrete steps. No vague filler.
-7. **Promote** manually to `.claude/agents/`, `.claude/skills/<slug>/SKILL.md`, or `.claude/rules/`.
+7. **Promote** manually to `.opencode/agents/`, `.opencode/skills/<slug>/SKILL.md`, `.opencode/rules/`, or `.opencode/commands/`.
 8. **Check** `git diff`.
 9. **Commit** manually.
 
 ## What to look for
-
-Useful patterns in external content:
 
 - "You are..." → potential agent role
 - "When to use..." → potential skill or trigger condition
@@ -111,14 +156,7 @@ Useful patterns in external content:
 
 ## Promotion rule
 
-Promote only if the idea is:
-
-- reusable
-- safer than current behavior
-- clear
-- not too narrow
-- compatible with docs / data / automation work
-- written in workspace style after rewrite
+Promote only if the idea is reusable, safer than current behavior, clear, not too narrow, compatible with docs / data / automation work, and rewritten in workspace style.
 
 ## Git rule
 

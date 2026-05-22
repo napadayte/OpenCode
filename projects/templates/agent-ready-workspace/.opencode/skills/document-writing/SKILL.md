@@ -62,14 +62,14 @@ A reusable procedure for producing maintainable workspace docs.
 - Risks remaining
 - Next step
 
-### Agent doc (`.claude/agents/<slug>.md`)
+### Agent doc (`.opencode/agents/<slug>.md`)
 - YAML frontmatter: `name`, `description`, `model`, `color`, `tools:`
 - Purpose
 - When to use
 - Restrictions
 - Output format
 
-### Skill doc (`.claude/skills/<slug>/SKILL.md`)
+### Skill doc (`.opencode/skills/<slug>/SKILL.md`)
 - YAML frontmatter: `name`, `description`, `allowed-tools`, `risk`, `source`
 - When to use
 - Inputs needed

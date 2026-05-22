@@ -5,12 +5,12 @@ model: sonnet
 
 Asset: $ARGUMENTS
 
-Use the `data-operator` agent and `data-inventory` skill from `.claude/skills/data-inventory/SKILL.md`.
+Use the `data-operator` agent and `data-inventory` skill from `.opencode/skills/data-inventory/SKILL.md`.
 
 Procedure:
 
 1. Read `data/inventory.md` — confirm whether this asset is already listed.
-2. Read `.claude/rules/data-operations.md`, `.claude/rules/security.md`.
+2. Read `.opencode/rules/data-operations.md`, `.opencode/rules/security.md`.
 3. Identify the asset: path / container / volume, type, source, sensitivity.
 4. Identify backup method and restore method. If restore has never been verified, mark as `Last verified: not verified`.
 5. Add or update the entry using the template in `data/inventory.md`.

@@ -17,7 +17,7 @@ tools:
 
 You write small helper scripts that support the workspace — not full applications.
 
-Read first: `@.claude/rules/light-code-policy.md`, `@.claude/rules/security.md`.
+Read first: `@.opencode/rules/light-code-policy.md`, `@.opencode/rules/security.md`.
 
 ## Allowed scope
 

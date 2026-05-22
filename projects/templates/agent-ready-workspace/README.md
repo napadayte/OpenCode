@@ -21,17 +21,18 @@ Start here:
 - `AGENTS.md` — shared contract loaded by every shell
 - `docs/overview.md` — what this workspace is for
 - `docs/runbook.md` — routine operations and recovery
-- `.claude/rules/dispatch-policy.md` — how tasks are classified
-- `.claude/rules/workflow.md` — workflow pipeline
+- `.opencode/rules/dispatch-policy.md` — how tasks are classified
+- `.opencode/rules/workflow.md` — workflow pipeline
 
-Other rules in `.claude/rules/`. Agents in `.claude/agents/`. Skills in `.claude/skills/`. Slash commands in `.claude/commands/`.
+Other rules in `.opencode/rules/`. Agents in `.opencode/agents/`. Skills in `.opencode/skills/`. Slash commands in `.opencode/commands/`.
 
 ## Folders
 
 | Folder | What lives here |
 |---|---|
 | `docs/` | Overview, runbook, decisions (ADR), plans, reports |
-| `.claude/` | Agents, skills, rules, commands, settings (canonical content) |
+| `.opencode/` | Agents, skills, rules, commands (canonical content) |
+| `.claude/` | Only Claude Code runtime settings (`settings.json`) |
 | `research/` | Research notes and source summaries |
 | `notes/` | Informal notes |
 | `prompts/` | Reusable prompts |
@@ -43,7 +44,7 @@ Other rules in `.claude/rules/`. Agents in `.claude/agents/`. Skills in `.claude
 ## Safe first prompt
 
 ```
-Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, .claude/rules/dispatch-policy.md, and .claude/rules/workflow.md. Summarize structure, risks, and next steps.
+Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, .opencode/rules/dispatch-policy.md, and .opencode/rules/workflow.md. Summarize structure, risks, and next steps.
 ```
 
 Or run `/analyze` for the same orientation.

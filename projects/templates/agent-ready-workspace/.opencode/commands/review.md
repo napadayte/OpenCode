@@ -3,13 +3,13 @@ description: Read-only review of pending changes
 model: sonnet
 ---
 
-Use the `reviewer` and `security-reviewer` agents from `.claude/`.
+Use the `reviewer` and `security-reviewer` agents from `.opencode/agents/`.
 
 Procedure:
 
 1. Run `git status` and `git diff` (or `git diff --cached` if changes are staged).
-2. Read `.claude/rules/git-operations.md`, `.claude/rules/security.md`.
-3. Use the `security-check` skill from `.claude/skills/security-check/SKILL.md`.
+2. Read `.opencode/rules/git-operations.md`, `.opencode/rules/security.md`.
+3. Use the `security-check` skill from `.opencode/skills/security-check/SKILL.md`.
 
 Report findings — **do not edit anything**.
 

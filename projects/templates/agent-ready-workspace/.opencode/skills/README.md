@@ -37,6 +37,6 @@ Then the body covers: when to use, inputs needed, procedure (numbered steps), ou
 2. Move the created file into a `<slug>/` subdirectory: `<slug>/SKILL.md`.
 3. Fill the frontmatter. `risk: high` for any procedure touching data, backups, or external services.
 4. Write the procedure as concrete numbered steps — not generic 8-step boilerplate.
-5. Update `AGENTS.md` and `.claude/skills/README.md`.
+5. Update `AGENTS.md` and `.opencode/skills/README.md`.
 
 A skill is meaningful only when its procedure is **distinct** from other skills. If you're writing the same generic steps as another skill, that means you don't have a new skill — you have a duplicate of an existing one.

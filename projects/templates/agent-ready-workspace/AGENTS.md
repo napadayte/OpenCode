@@ -1,7 +1,7 @@
-@.claude/rules/dispatch-policy.md
-@.claude/rules/workflow.md
-@.claude/rules/git-operations.md
-@.claude/rules/security.md
+@.opencode/rules/dispatch-policy.md
+@.opencode/rules/workflow.md
+@.opencode/rules/git-operations.md
+@.opencode/rules/security.md
 
 # AGENTS.md
 
@@ -12,24 +12,24 @@ Optimize for: clarity, safety, recoverability, low chaos, manual control, long-t
 ## Meaning
 
 ```
-agent   = who performs the task   → .claude/agents/
-skill   = how to perform the task → .claude/skills/<name>/SKILL.md
-rule    = required constraint     → .claude/rules/
-command = reusable slash command  → .claude/commands/
+agent   = who performs the task   → .opencode/agents/
+skill   = how to perform the task → .opencode/skills/<name>/SKILL.md
+rule    = required constraint     → .opencode/rules/
+command = reusable slash command  → .opencode/commands/
 ```
 
 ## Read on demand (task-specific rules)
 
 | If the task involves | Read |
 |---|---|
-| Data, databases, exports, backups, restore | `.claude/rules/data-operations.md` |
-| n8n or automation workflows | `.claude/rules/automation-operations.md` |
-| Scripts, scanners, helper tools | `.claude/rules/light-code-policy.md` |
-| Documentation, README, runbook, ADR | `.claude/rules/document-style.md` |
-| Brainstorm or strategic decisions | `.claude/rules/brainstorm.md` |
-| Planning multi-step work | `.claude/rules/planning.md` |
+| Data, databases, exports, backups, restore | `.opencode/rules/data-operations.md` |
+| n8n or automation workflows | `.opencode/rules/automation-operations.md` |
+| Scripts, scanners, helper tools | `.opencode/rules/light-code-policy.md` |
+| Documentation, README, runbook, ADR | `.opencode/rules/document-style.md` |
+| Brainstorm or strategic decisions | `.opencode/rules/brainstorm.md` |
+| Planning multi-step work | `.opencode/rules/planning.md` |
 
-## Agents (`.claude/agents/`)
+## Agents (`.opencode/agents/`)
 
 | Agent | Role | Edits? |
 |---|---|---|
@@ -44,7 +44,7 @@ command = reusable slash command  → .claude/commands/
 | `docs-writer` | Workspace documentation | docs only |
 | `light-code-helper` | Small Python / Bash scripts | code only |
 
-## Skills (`.claude/skills/`)
+## Skills (`.opencode/skills/`)
 
 | Skill | Purpose |
 |---|---|
@@ -59,7 +59,7 @@ command = reusable slash command  → .claude/commands/
 | `light-code-script` | Small helper scripts (stdlib first) |
 | `stock-scanner-research` | Research-only scanner (never trades) |
 
-## Commands (`.claude/commands/`)
+## Commands (`.opencode/commands/`)
 
 - `/analyze` — read-only orientation pass
 - `/plan <task>` — produce a plan file under `docs/plans/`

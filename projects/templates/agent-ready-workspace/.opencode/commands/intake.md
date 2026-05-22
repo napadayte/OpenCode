@@ -34,7 +34,7 @@ For each item to promote, return:
 - type
 - proposed name
 - why useful
-- where it should live (`.claude/agents/`, `.claude/skills/<name>/SKILL.md`, `.claude/rules/`)
+- where it should live (`.opencode/agents/`, `.opencode/skills/<name>/SKILL.md`, `.opencode/rules/`)
 - rewritten content in workspace style (short, scannable, no external filler)
 - risks
 - recommendation: keep / reject / split
@@ -47,4 +47,4 @@ Restrictions:
 
 - Never copy large external text directly. Rewrite in workspace style.
 - Never include secrets (the source is treated as untrusted).
-- Never auto-add files to `.claude/agents/` or `.claude/skills/` — promotion is manual after user approval.
+- Never auto-add files to `.opencode/agents/` or `.opencode/skills/` — promotion is manual after user approval.

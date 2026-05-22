@@ -20,10 +20,10 @@ case "$SLUG" in
     ;;
 esac
 
-# Find workspace root: nearest parent with AGENTS.md and either .claude/ or docs/.
+# Find workspace root: nearest parent with AGENTS.md and either .opencode/ or docs/.
 ROOT="$PWD"
 while [ "$ROOT" != "/" ]; do
-  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.claude" ] || [ -d "$ROOT/docs" ]; }; then
+  if [ -f "$ROOT/AGENTS.md" ] && { [ -d "$ROOT/.opencode" ] || [ -d "$ROOT/docs" ]; }; then
     break
   fi
   ROOT="$(dirname "$ROOT")"
@@ -36,8 +36,8 @@ if [ "$ROOT" = "/" ]; then
 fi
 
 # Canonical location for agents in a workspace.
-mkdir -p "$ROOT/.claude/agents"
-TARGET="$ROOT/.claude/agents/$SLUG.md"
+mkdir -p "$ROOT/.opencode/agents"
+TARGET="$ROOT/.opencode/agents/$SLUG.md"
 
 if [ -e "$TARGET" ]; then
   echo "Agent already exists:"
@@ -99,5 +99,5 @@ echo
 echo "Next steps:"
 echo "  1. Fill the YAML frontmatter (tools: whitelist — least privilege)."
 echo "  2. Replace placeholders in the body."
-echo "  3. Update AGENTS.md and .claude/agents/README.md so the role is discoverable."
+echo "  3. Update AGENTS.md and .opencode/agents/README.md so the role is discoverable."
 echo "  4. If OpenCode should know it, add an entry under \"agent\" in opencode.json."

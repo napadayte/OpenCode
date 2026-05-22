@@ -80,7 +80,7 @@ Create `tools/scanners/<name>/assumptions.md` covering:
 
 ### 4. Implement using light-code-script skill
 
-Follow `@.claude/skills/light-code-script/SKILL.md`.
+Follow `@.opencode/skills/light-code-script/SKILL.md`.
 
 Constraints specific to scanners:
 - Never hardcode API keys → env vars only

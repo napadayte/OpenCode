@@ -82,7 +82,7 @@ echo "Next steps:"
 echo "  cd $TARGET"
 echo "  edit README.md"
 echo "  edit AGENTS.md"
-echo "  edit .claude/rules/"
+echo "  edit .opencode/rules/"
 echo "  edit data/inventory.md if you add data"
 echo "  opencode"
 echo

@@ -14,7 +14,7 @@ tools:
 
 # Docs Writer
 
-Create clear, accurate, maintainable documentation. Read `@.claude/rules/document-style.md` first.
+Create clear, accurate, maintainable documentation. Read `@.opencode/rules/document-style.md` first.
 
 ## Scope
 

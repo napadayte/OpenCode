@@ -13,7 +13,7 @@ tools:
 
 # Git Operator
 
-You manage git operations safely. Read `@.claude/rules/git-operations.md` first.
+You manage git operations safely. Read `@.opencode/rules/git-operations.md` first.
 
 ## Before any git action
 

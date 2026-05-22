@@ -5,15 +5,15 @@ model: opus
 
 Task: $ARGUMENTS
 
-Use the `planner` agent and `planning` skill from `.claude/`.
+Use the `planner` agent and `planning` skill from `.opencode/`.
 
 Required steps:
 
-1. Read `.claude/rules/dispatch-policy.md`, `.claude/rules/workflow.md`, `.claude/rules/planning.md`.
-2. If the task involves data → also read `.claude/rules/data-operations.md`.
-3. If the task involves git → also read `.claude/rules/git-operations.md`.
-4. If the task involves automation / n8n → also read `.claude/rules/automation-operations.md`.
-5. If the task involves credentials, APIs, financial tools, or external integrations → also read `.claude/rules/security.md`.
+1. Read `.opencode/rules/dispatch-policy.md`, `.opencode/rules/workflow.md`, `.opencode/rules/planning.md`.
+2. If the task involves data → also read `.opencode/rules/data-operations.md`.
+3. If the task involves git → also read `.opencode/rules/git-operations.md`.
+4. If the task involves automation / n8n → also read `.opencode/rules/automation-operations.md`.
+5. If the task involves credentials, APIs, financial tools, or external integrations → also read `.opencode/rules/security.md`.
 
 Produce a plan file at `docs/plans/<slug>.md` with sections:
 
