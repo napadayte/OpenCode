@@ -80,7 +80,18 @@ echo "  $TARGET"
 echo
 echo "Next steps:"
 echo "  cd $TARGET"
-echo "  edit README.md"
-echo "  edit AGENTS.md"
-echo "  edit docs/architecture.md"
 echo "  opencode"
+echo
+echo "Inside opencode:"
+echo "  /analyze            — read project, understand context"
+echo "  /plan <task>        — create step-by-step plan (no edits yet)"
+echo "  (implement from plan manually, step by step)"
+echo "  /review             — check diff before committing"
+echo
+echo "Then commit manually:"
+echo "  git status && git diff"
+echo "  git commit -m \"describe what changed\""
+echo
+echo "Safety:"
+echo "  Do not commit secrets."
+echo "  Commit manually only after review. Agents never push."
