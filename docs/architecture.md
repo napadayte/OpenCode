@@ -14,12 +14,10 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
 ├── .opencode/instructions.md  Repo-global rules (loaded via opencode.json)
 ├── docs/
 │   ├── architecture.md        This file
-│   ├── how-to-use.md          Extended usage guide
-│   ├── daily-workflow.md      Day-to-day procedures
-│   ├── agent-shells.md        Per-shell notes
-│   ├── how-to-add-agents-skills.md
-│   ├── workspace-template-spec.md
-│   └── shells/{claude,codex,gemini}/
+│   ├── agent-shells.md        Per-shell notes (full reference)
+│   ├── workspace-template-spec.md   Full workspace template spec
+│   ├── shells/{claude,codex,gemini}/   Per-shell instruction files
+│   └── wiki/                  Visual Russian wiki (Obsidian-friendly)
 ├── projects/templates/
 │   ├── agent-ready-project/     For code-first projects
 │   └── agent-ready-workspace/   For docs / research / automation / data
@@ -73,7 +71,7 @@ External rules and prompts go through quarantined intake:
 capture-agent-asset <file>      copies to research/agent-assets/<date>_<slug>/, writes review.md
 ```
 
-See `docs/how-to-add-agents-skills.md` for the full intake-to-promotion flow.
+See `docs/wiki/концепции/агент.md` and `docs/wiki/концепции/скилл.md` for agent/skill specs.
 
 ## Sync
 
