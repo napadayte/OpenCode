@@ -57,7 +57,6 @@ command = reusable slash command  → .opencode/commands/
 | `security-check` | Read-only secret + risk audit |
 | `document-writing` | Conventions per doc type |
 | `light-code-script` | Small helper scripts (stdlib first) |
-| `stock-scanner-research` | Research-only scanner (never trades) |
 
 ## Commands (`.opencode/commands/`)
 
