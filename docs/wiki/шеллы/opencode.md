@@ -41,7 +41,7 @@
 ```
 
 > [!important]
-> Никаких `agent:` или `command:` блоков в `opencode.json` не нужно. Файлы автоматически подхватываются через `Glob.scan("{agent,agents}/**/*.md")`.
+> Inline-блоки `agent:` / `command:` в workspace `opencode.json` не нужны — файлы из `.opencode/agents/` и `.opencode/commands/` подхватываются автоматически. OpenCode сканирует обе формы — `.opencode/agent/` и `.opencode/agents/` (то же для skills и commands). В **глобальном** конфиге inline-блоки остаются валидными, если так удобнее.
 
 ## Permission система
 

@@ -13,7 +13,6 @@ Reusable procedures. Each skill is `<slug>/SKILL.md` with YAML frontmatter and a
 | [security-check](security-check/SKILL.md) | Read-only secret + risk audit |
 | [document-writing](document-writing/SKILL.md) | Conventions per doc type |
 | [light-code-script](light-code-script/SKILL.md) | Small helper scripts (stdlib first) |
-| [stock-scanner-research](stock-scanner-research/SKILL.md) | Research-only scanner (never trades) |
 
 ## Format
 
