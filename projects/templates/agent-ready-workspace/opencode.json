@@ -208,11 +208,6 @@
       "description": "Update data/inventory.md with an asset",
       "agent": "data-operator",
       "template": "Follow the instructions in .opencode/commands/inventory.md for this asset: $ARGUMENTS"
-    },
-    "fix": {
-      "description": "Implement an approved plan",
-      "agent": "planner",
-      "template": "Implement the change described in: $ARGUMENTS. First read the matching plan in docs/plans/ if present. Make small, reviewable changes. Show diff and verification after."
     }
   },
   "tool_output": {
