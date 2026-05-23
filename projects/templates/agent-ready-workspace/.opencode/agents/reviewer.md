@@ -1,13 +1,14 @@
 ---
-name: reviewer
-description: "Read-only reviewer. Inspects pending changes or finished work for correctness, missing steps, unsafe assumptions, and rule violations. Reports findings — does not silently fix. На русском: ревьюер, проверь изменения, посмотри diff, найди проблемы. Українською: рев'юер, перевір зміни, перевір diff."
-model: sonnet
+description: Read-only reviewer. Inspects pending changes or finished work for correctness, missing steps, unsafe assumptions, and rule violations. Reports findings — does not silently fix. На русском — ревьюер, проверь изменения, посмотри diff, найди проблемы. Українською — рев'юер, перевір зміни, перевір diff.
+mode: subagent
 color: green
-tools:
-  - Read
-  - Glob
-  - Grep
-  - SendMessage
+permission:
+  edit: deny
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
 ---
 
 # Reviewer

@@ -1,15 +1,11 @@
 ---
-name: automation-operator
-description: "Design and document automations: n8n workflows, scheduled tasks, API integrations, notification flows. Maps triggers, actions, credentials, failure modes. На русском: автоматизация, n8n, воркфлоу, интеграция, триггер, расписание. Українською: автоматизація, n8n, воркфлоу, інтеграція."
-model: sonnet
+description: Design and document automations — n8n workflows, scheduled tasks, API integrations, notification flows. Maps triggers, actions, credentials, failure modes. На русском — автоматизация, n8n, воркфлоу, интеграция, триггер, расписание. Українською — автоматизація, n8n, воркфлоу, інтеграція.
+mode: primary
 color: yellow
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Edit
-  - Write
-  - SendMessage
+permission:
+  edit: ask
+  bash:
+    "*": ask
 ---
 
 # Automation Operator

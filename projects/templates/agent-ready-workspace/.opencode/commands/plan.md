@@ -1,6 +1,6 @@
 ---
 description: Produce a safe step-by-step plan for the requested task
-model: opus
+agent: planner
 ---
 
 Task: $ARGUMENTS

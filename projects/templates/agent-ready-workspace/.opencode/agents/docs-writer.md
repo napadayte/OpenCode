@@ -1,15 +1,13 @@
 ---
-name: docs-writer
-description: "Create or update documentation: README, runbook, decision records, plan docs, report docs. Keeps style consistent. NOT for code or automations. На русском: документация, README, написать инструкцию, runbook, ADR. Українською: документація, інструкція, написати документ."
-model: haiku
+description: Create or update documentation — README, runbook, decision records, plan docs, report docs. Keeps style consistent. NOT for code or automations. На русском — документация, README, написать инструкцию, runbook, ADR. Українською — документація, інструкція, написати документ.
+mode: primary
 color: blue
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Edit
-  - Write
-  - SendMessage
+permission:
+  edit: ask
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
 ---
 
 # Docs Writer

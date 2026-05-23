@@ -1,6 +1,7 @@
 ---
 description: Read-only review of pending changes
-model: sonnet
+agent: reviewer
+subtask: true
 ---
 
 Use the `reviewer` and `security-reviewer` agents from `.opencode/agents/`.

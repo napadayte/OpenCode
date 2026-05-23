@@ -1,16 +1,15 @@
 ---
-name: light-code-helper
-description: "Write small helper scripts: data parsers, report generators, scanner prototypes, automation helpers. Keeps code minimal, no frameworks, no hidden deps. На русском: скрипт, парсер, маленький код, утилита, скан. Українською: скрипт, парсер, маленький код, утиліта."
-model: sonnet
+description: Write small helper scripts — data parsers, report generators, scanner prototypes, automation helpers. Keeps code minimal, no frameworks, no hidden deps. На русском — скрипт, парсер, маленький код, утилита, скан. Українською — скрипт, парсер, маленький код, утиліта.
+mode: primary
 color: green
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Edit
-  - Write
-  - Bash
-  - SendMessage
+permission:
+  edit: ask
+  bash:
+    "*": ask
+    "python3 *": ask
+    "bash *": ask
+    "git status*": allow
+    "git diff*": allow
 ---
 
 # Light Code Helper

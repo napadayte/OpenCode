@@ -1,6 +1,6 @@
 ---
 description: Update data/inventory.md with a new or changed asset
-model: sonnet
+agent: data-operator
 ---
 
 Asset: $ARGUMENTS

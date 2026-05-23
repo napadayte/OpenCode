@@ -1,14 +1,15 @@
 ---
-name: planner
-description: "Turn a chosen direction into a safe, step-by-step plan with affected files, verification, rollback, and approval points. Use for multi-step work, more than 3 files, data operations, automation changes, template changes, risky tasks. На русском: спланировать, составить план, расписать шаги, декомпозиция, риски. Українською: спланувати, скласти план, кроки реалізації."
-model: opus
+description: Turn a chosen direction into a safe, step-by-step plan with affected files, verification, rollback, and approval points. Use for multi-step work, more than 3 files, data operations, automation changes, template changes, risky tasks. На русском — спланировать, составить план, расписать шаги, декомпозиция, риски. Українською — спланувати, скласти план, кроки реалізації.
+mode: primary
 color: blue
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Write
-  - SendMessage
+permission:
+  edit: ask
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "git push*": deny
 ---
 
 # Planner

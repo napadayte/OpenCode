@@ -40,7 +40,7 @@ Findings go below each file as they are found. Severity:
 These files ship to every new workspace. Highest priority.
 
 #### Root config
-- [ ] `projects/templates/agent-ready-workspace/opencode.json`
+- [x] `projects/templates/agent-ready-workspace/opencode.json` — removed `agent:` + `command:` + `fix` blocks; .md files are sole source
 - [ ] `projects/templates/agent-ready-workspace/AGENTS.md`
 - [ ] `projects/templates/agent-ready-workspace/.opencode/instructions.md`
 - [ ] `projects/templates/agent-ready-workspace/README.md`
@@ -51,17 +51,17 @@ These files ship to every new workspace. Highest priority.
 - [ ] `projects/templates/agent-ready-workspace/.gemini/settings.json`
 
 #### Agents (11)
-- [ ] `.opencode/agents/README.md`
-- [ ] `.opencode/agents/planner.md`
-- [ ] `.opencode/agents/brainstormer.md`
-- [ ] `.opencode/agents/devil.md`
-- [ ] `.opencode/agents/reviewer.md`
-- [ ] `.opencode/agents/security-reviewer.md`
-- [ ] `.opencode/agents/data-operator.md`
-- [ ] `.opencode/agents/git-operator.md`
-- [ ] `.opencode/agents/automation-operator.md`
-- [ ] `.opencode/agents/docs-writer.md`
-- [ ] `.opencode/agents/light-code-helper.md`
+- [x] `.opencode/agents/README.md` — rewrote format guide; OpenCode-spec frontmatter, mirroring to .claude/agents/ noted
+- [x] `.opencode/agents/planner.md` — OpenCode-spec frontmatter, permission migrated
+- [x] `.opencode/agents/brainstormer.md`
+- [x] `.opencode/agents/devil.md` — also dropped Claude-Code-specific `SendMessage` tool refs
+- [x] `.opencode/agents/reviewer.md`
+- [x] `.opencode/agents/security-reviewer.md`
+- [x] `.opencode/agents/data-operator.md`
+- [x] `.opencode/agents/git-operator.md`
+- [x] `.opencode/agents/automation-operator.md`
+- [x] `.opencode/agents/docs-writer.md`
+- [x] `.opencode/agents/light-code-helper.md`
 
 #### Skills (11)
 - [ ] `.opencode/skills/README.md`
@@ -77,11 +77,11 @@ These files ship to every new workspace. Highest priority.
 - [ ] `.opencode/skills/stock-scanner-research/SKILL.md`
 
 #### Commands (5)
-- [ ] `.opencode/commands/analyze.md`
-- [ ] `.opencode/commands/plan.md`
-- [ ] `.opencode/commands/review.md`
-- [ ] `.opencode/commands/intake.md`
-- [ ] `.opencode/commands/inventory.md`
+- [x] `.opencode/commands/analyze.md` — replaced `model: sonnet` with `agent: planner`
+- [x] `.opencode/commands/plan.md` — replaced `model: opus` with `agent: planner`
+- [x] `.opencode/commands/review.md` — replaced `model: sonnet` with `agent: reviewer` + `subtask: true`
+- [x] `.opencode/commands/intake.md` — replaced `model: opus` with `agent: planner`
+- [x] `.opencode/commands/inventory.md` — replaced `model: sonnet` with `agent: data-operator`
 
 #### Rules (10)
 - [ ] `.opencode/rules/dispatch-policy.md`
@@ -342,9 +342,13 @@ The `opencode.json` `command` block defines `analyze`, `plan`, `review`, `intake
 
 ---
 
-## Awaiting user decision
+## User decisions (2026-05-23)
 
-Before continuing batch fixes, need direction on F1, F2, F4, F5. See "Architectural conclusion" above for the three options.
+- **Frontmatter style**: OpenCode-format priority. `.md` files are valid OpenCode definitions; Claude Code mirroring is user's responsibility (documented in agents/README.md).
+- **Command source**: Files only. Removed `command:` block from `opencode.json`.
+- **Model field**: Removed from agents and commands. Workspace template stays model-agnostic; user picks runtime model.
+
+Consequence: removed `agent:` block from `opencode.json` too — `.md` files are the single source of truth for both agents and commands.
 
 ## Session log
 
@@ -354,3 +358,4 @@ Before continuing batch fixes, need direction on F1, F2, F4, F5. See "Architectu
 | 2026-05-23 | OpenCode/Claude Code specs | fetched canonical schemas via Context7 + raw GitHub | — |
 | 2026-05-23 | `opencode.json` | removed orphaned `fix` command | F3 fixed |
 | 2026-05-23 | Phase 1 findings | recorded F1–F5; awaiting decision before F1/F2 fix | 5 |
+| 2026-05-23 | Tier 1 batch | rewrote all 10 agent `.md` files + commands + agents/README + opencode.json to OpenCode spec | F1, F2, F4, F5 fixed for workspace template |

@@ -1,6 +1,6 @@
 ---
 description: Review a captured external asset and propose what to promote
-model: opus
+agent: planner
 ---
 
 Asset folder: $ARGUMENTS
