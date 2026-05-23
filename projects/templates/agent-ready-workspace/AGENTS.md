@@ -31,8 +31,11 @@ command = reusable slash command  → .opencode/commands/
 
 ## Agents (`.opencode/agents/`)
 
+**Always start with `manager`.** It classifies the task and delegates to the right specialist. You do not pick specialists yourself.
+
 | Agent | Role | Edits? |
 |---|---|---|
+| `manager` | **Front door.** Classifies, delegates, synthesizes | no |
 | `planner` | Multi-step plan with risks, verification, rollback | plan files only |
 | `brainstormer` | Option generation before design | no |
 | `devil` | Read-only critic of plans and decisions | no |

@@ -65,8 +65,10 @@ Ask before acting when:
 
 ## Dispatcher Rule
 
-The dispatcher classifies, routes, and synthesizes.
+The dispatcher (`manager` agent) classifies, routes, and synthesizes.
 
-The dispatcher should not perform risky file edits directly.
+The dispatcher must not perform specialist work or risky file edits directly. It delegates via the `task` tool and reports the routing decision to the user.
+
+Every primary interaction starts with `manager`. Specialists (`planner`, `reviewer`, `data-operator`, etc.) are invoked by `manager`, not picked directly by the user.
 
 ------------------------------------------------------------
