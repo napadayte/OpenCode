@@ -60,18 +60,30 @@ A reusable procedure for producing maintainable workspace docs.
 - Next step
 
 ### Agent doc (`.opencode/agents/<slug>.md`)
-- YAML frontmatter: `name`, `description`, `model`, `color`, `tools:`
+- YAML frontmatter (OpenCode spec):
+  - `description` (required for picker)
+  - `mode` (`primary` | `subagent` | `all` — `all` is the default)
+  - `model` (optional, format `provider/model-id`)
+  - `permission` block (`edit`, `bash`, `task`, `webfetch`, `skill`)
+  - optional `tools` as a **map** (`{write: false}`) to disable specific tools
+  - optional `color` — **only** hex (`#FF5733`) or theme tokens (`primary`, `secondary`, `accent`, `success`, `warning`, `error`, `info`)
+  - **Do NOT** add `name:` (filename is the name) or `tools:` as an array (Claude Code format — crashes on load in older OpenCode)
 - Purpose
 - When to use
 - Restrictions
 - Output format
 
 ### Skill doc (`.opencode/skills/<slug>/SKILL.md`)
-- YAML frontmatter: `name`, `description`, `allowed-tools`, `risk`, `source`
+- YAML frontmatter (per opencode.ai/docs/skills):
+  - `name` (required)
+  - `description` (required)
+  - optional `license`, `compatibility`, `metadata` (string-to-string map)
+  - **Any other fields are silently ignored** — put risk/scope info in the body instead
 - When to use
 - Inputs needed
 - Procedure (numbered steps)
 - Output
+- Risk (low | medium | high — and why)
 - Restrictions
 
 ## Style rules

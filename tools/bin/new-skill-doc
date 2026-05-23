@@ -54,9 +54,6 @@ cat > "$TARGET" <<EOF2
 ---
 name: $SLUG
 description: "<one sentence purpose>. Use when: <triggers>. На русском: <ru triggers>. Українською: <ua triggers>."
-allowed-tools: Read, Glob, Grep
-risk: unknown
-source: workspace
 ---
 
 # $TITLE
@@ -89,6 +86,10 @@ Identify before starting:
 - <what the skill produces>
 - <where it lands>
 
+## Risk
+
+<low | medium | high — and why. Mark high for data/backup/external/destructive operations.>
+
 ## Restrictions
 
 - <safety rule 1>
@@ -99,6 +100,13 @@ echo "Created skill:"
 echo "  $TARGET"
 echo
 echo "Next steps:"
-echo "  1. Fill the YAML frontmatter (risk: high for data/backup/external)."
-echo "  2. Write a DISTINCT, concrete procedure — not generic boilerplate."
-echo "  3. Update AGENTS.md and .opencode/skills/README.md."
+echo "  1. Fill description with concrete triggers (RU/UA/EN)."
+echo "  2. Set the Risk section (high for data/backup/external/destructive)."
+echo "  3. Write a DISTINCT, concrete procedure — not generic boilerplate."
+echo "  4. Update AGENTS.md and .opencode/skills/README.md."
+echo
+echo "OpenCode skill frontmatter rules (per opencode.ai/docs/skills):"
+echo "  - Required: name, description"
+echo "  - Optional: license, compatibility, metadata"
+echo "  - Any other fields (allowed-tools, risk, source, triggers) are SILENTLY IGNORED."
+echo "    Put risk/scope info in the body instead."
