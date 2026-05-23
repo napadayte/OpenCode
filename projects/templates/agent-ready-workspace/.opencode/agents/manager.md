@@ -17,6 +17,10 @@ permission:
     "git branch*": allow
     "git push*": deny
     "rm -rf *": deny
+  task:
+    "*": allow
+    "*-operator": ask
+    "security-reviewer": ask
 ---
 
 # Manager
@@ -66,7 +70,7 @@ If the user installed extra agents globally, you may delegate to them when the t
 | Search / lookup | `search-specialist` |
 | Trend / market research | `trend-analyst`, `market-researcher` |
 
-To check what's actually available, run `ls ~/.config/opencode/.opencode/agents/` once per session.
+To check what's actually available, run `ls ~/.config/opencode/agents/` (or `~/.config/opencode/agent/` — OpenCode scans both) once per session.
 If a delegation target does not exist, fall back to the closest workspace agent and tell the user.
 
 ## What you DO yourself (no delegation)
