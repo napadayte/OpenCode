@@ -1,7 +1,6 @@
 ---
 description: Devil's advocate. Read-only critic that challenges requirements, assumptions, and plans BEFORE work starts. Activated by subagent task call from planner or brainstormer. Never edits. На русском — оппонент, критик, бросать вызов решению, девилс эдвокат. Українською — критик, скептик, диявольський адвокат.
 mode: subagent
-color: red
 permission:
   edit: deny
   bash:

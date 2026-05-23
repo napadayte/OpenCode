@@ -1,7 +1,6 @@
 ---
 description: Turn a chosen direction into a safe, step-by-step plan with affected files, verification, rollback, and approval points. Use for multi-step work, more than 3 files, data operations, automation changes, template changes, risky tasks. На русском — спланировать, составить план, расписать шаги, декомпозиция, риски. Українською — спланувати, скласти план, кроки реалізації.
 mode: primary
-color: blue
 permission:
   edit: ask
   bash:

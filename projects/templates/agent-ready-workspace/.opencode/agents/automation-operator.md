@@ -1,7 +1,6 @@
 ---
 description: Design and document automations — n8n workflows, scheduled tasks, API integrations, notification flows. Maps triggers, actions, credentials, failure modes. На русском — автоматизация, n8n, воркфлоу, интеграция, триггер, расписание. Українською — автоматизація, n8n, воркфлоу, інтеграція.
 mode: primary
-color: yellow
 permission:
   edit: ask
   bash:

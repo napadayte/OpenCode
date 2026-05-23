@@ -1,7 +1,6 @@
 ---
 description: Create or update documentation — README, runbook, decision records, plan docs, report docs. Keeps style consistent. NOT for code or automations. На русском — документация, README, написать инструкцию, runbook, ADR. Українською — документація, інструкція, написати документ.
 mode: primary
-color: blue
 permission:
   edit: ask
   bash:

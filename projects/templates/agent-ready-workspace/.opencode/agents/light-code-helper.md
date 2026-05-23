@@ -1,7 +1,6 @@
 ---
 description: Write small helper scripts — data parsers, report generators, scanner prototypes, automation helpers. Keeps code minimal, no frameworks, no hidden deps. На русском — скрипт, парсер, маленький код, утилита, скан. Українською — скрипт, парсер, маленький код, утиліта.
 mode: primary
-color: green
 permission:
   edit: ask
   bash:

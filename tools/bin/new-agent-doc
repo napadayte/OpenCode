@@ -49,15 +49,16 @@ TITLE="$(echo "$SLUG" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(subs
 
 cat > "$TARGET" <<EOF2
 ---
-name: $SLUG
 description: "<one sentence purpose>. Use when: <triggers>. На русском: <ru triggers>. Українською: <ua triggers>."
-model: sonnet
-color: gray
-tools:
-  - Read
-  - Glob
-  - Grep
-  - SendMessage
+mode: primary
+permission:
+  edit: ask
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "git push*": deny
 ---
 
 # $TITLE
@@ -97,7 +98,12 @@ echo "Created agent:"
 echo "  $TARGET"
 echo
 echo "Next steps:"
-echo "  1. Fill the YAML frontmatter (tools: whitelist — least privilege)."
+echo "  1. Fill the description, mode (primary|subagent), and tighten permission."
 echo "  2. Replace placeholders in the body."
 echo "  3. Update AGENTS.md and .opencode/agents/README.md so the role is discoverable."
-echo "  4. If OpenCode should know it, add an entry under \"agent\" in opencode.json."
+echo
+echo "OpenCode frontmatter rules:"
+echo "  - Do NOT add 'name:'  — name comes from filename"
+echo "  - Do NOT add 'color: blue'/etc — only hex or theme tokens (primary/info/...)"
+echo "  - Do NOT add 'model: sonnet' bare — use 'provider/model' format"
+echo "  - Do NOT add 'tools: [array]' — use 'permission:' block instead"
