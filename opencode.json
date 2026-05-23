@@ -132,6 +132,13 @@
     "max_lines": 200,
     "max_bytes": 12000
   },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
+    }
+  },
   "compaction": {
     "auto": true,
     "tail_turns": 15
