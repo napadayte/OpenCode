@@ -51,10 +51,11 @@ Each script:
 
 ```
 opencode (or claude / codex / gemini)
-  /analyze   →   read structure, summarize
-  /plan      →   propose step-by-step plan, no edits
-  /fix       →   implement approved plan
-  /review    →   read-only review of current diff
+  /analyze     →   read structure, summarize
+  /plan        →   propose step-by-step plan, no edits
+  /review      →   read-only review of current diff
+  /intake      →   review a captured external asset
+  /inventory   →   update data/inventory.md
 ```
 
 Manual `git status` / `git diff` before and after every change. Commits and pushes are manual; agents never push.
@@ -63,8 +64,8 @@ Manual `git status` / `git diff` before and after every change. Commits and push
 
 Inside a workspace:
 ```
-new-agent-doc <slug>      creates agents/<slug>.md from a skeleton
-new-skill-doc <slug>      creates skills/<slug>.md from a skeleton
+new-agent-doc <slug>      creates .opencode/agents/<slug>.md from a skeleton
+new-skill-doc <slug>      creates .opencode/skills/<slug>/SKILL.md from a skeleton
 ```
 
 External rules and prompts go through quarantined intake:
