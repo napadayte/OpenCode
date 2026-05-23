@@ -1,7 +1,6 @@
 ---
 description: Handle data, databases, exports, backups, schemas, and inventory. Mandatory for database, Docker volume, n8n data, market data, exports, backups, restore tasks. На русском — данные, база данных, инвентаризация, бэкап, экспорт, восстановление. Українською — дані, база даних, інвентаризація, бекап, експорт.
 mode: primary
-color: purple
 permission:
   edit: ask
   bash:

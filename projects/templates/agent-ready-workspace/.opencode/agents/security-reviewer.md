@@ -1,7 +1,6 @@
 ---
 description: Read-only security check for secrets, credentials, API keys, auth files, exposed data, destructive commands, and unsafe automation. Mandatory when credentials, APIs, financial tools, or external integrations are involved. На русском — безопасность, секреты, проверь на утечки, API ключи, токены, права доступа. Українською — безпека, секрети, перевір на витоки.
 mode: subagent
-color: orange
 permission:
   edit: deny
   bash:

@@ -23,7 +23,6 @@ Each agent file is the single source of truth for OpenCode. YAML frontmatter fol
 ---
 description: One sentence + trigger words (EN/RU/UA). Front-load keywords the user is likely to type.
 mode: primary       # or "subagent" — primary appears in /agent picker, subagent is invoked via task tool
-color: blue         # cosmetic
 permission:
   edit: ask         # ask | allow | deny — coarse rule
   bash:             # per-pattern bash rules; default falls back to top-level opencode.json
@@ -39,6 +38,7 @@ Rules:
 - `name:` is NOT in frontmatter — OpenCode derives it from the filename.
 - `model:` is intentionally omitted — workspace template stays model-agnostic; the user's `default_agent` / runtime model is used.
 - `tools:` is NOT used — selection is via `permission` (the array form is Claude Code's, not OpenCode's).
+- `color:` is intentionally omitted — OpenCode 1.15+ accepts only hex (`#FF5733`) or theme tokens (`primary`, `secondary`, `accent`, `success`, `warning`, `error`, `info`). String names like `blue` / `green` / `gray` crash the server. Leave it out unless you use a valid value.
 
 ## Mirroring to other shells
 

@@ -1,7 +1,6 @@
 ---
 description: Handle git — status checks, staged diffs, branch operations, sync, conflict resolution. Inspects, plans, and executes only approved commands. Never auto-pushes. На русском — гит, коммит, ветка, статус, диф, push, sync. Українською — гіт, коміт, гілка, діфф.
 mode: primary
-color: gray
 permission:
   edit: deny
   bash:
