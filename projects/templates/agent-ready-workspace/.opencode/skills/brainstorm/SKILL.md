@@ -1,9 +1,6 @@
 ---
 name: brainstorm
 description: "Structured option-generation procedure used BEFORE design or implementation. Produces understanding lock, assumptions, 2-3 options, decision log. Use when: task unclear, multiple approaches possible, architectural choice. На русском: мозговой штурм, варианты, обсудить, накидать идеи. Українською: брейнсторм, варіанти, обговорити."
-allowed-tools: Read, Glob, Grep
-risk: low
-source: workspace
 ---
 
 # Brainstorm Skill

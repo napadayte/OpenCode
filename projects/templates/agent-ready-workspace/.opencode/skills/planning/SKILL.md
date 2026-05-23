@@ -1,9 +1,6 @@
 ---
 name: planning
 description: "Turn an approved direction into a small, verifiable step-by-step plan with affected files, verification, and rollback. Use AFTER brainstorm, BEFORE implementation. На русском: планирование, расписать шаги, декомпозиция, риски, план. Українською: планування, кроки реалізації."
-allowed-tools: Read, Glob, Grep, Write
-risk: low
-source: workspace
 ---
 
 # Planning Skill

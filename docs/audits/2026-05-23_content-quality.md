@@ -41,14 +41,14 @@ These files ship to every new workspace. Highest priority.
 
 #### Root config
 - [x] `projects/templates/agent-ready-workspace/opencode.json` — removed `agent:` + `command:` + `fix` blocks; .md files are sole source
-- [ ] `projects/templates/agent-ready-workspace/AGENTS.md`
-- [ ] `projects/templates/agent-ready-workspace/.opencode/instructions.md`
-- [ ] `projects/templates/agent-ready-workspace/README.md`
-- [ ] `projects/templates/agent-ready-workspace/CLAUDE.md`
-- [ ] `projects/templates/agent-ready-workspace/GEMINI.md`
-- [ ] `projects/templates/agent-ready-workspace/.claude/settings.json`
-- [ ] `projects/templates/agent-ready-workspace/.codex/config.toml`
-- [ ] `projects/templates/agent-ready-workspace/.gemini/settings.json`
+- [x] `projects/templates/agent-ready-workspace/AGENTS.md` — already aligned post-fixes
+- [x] `projects/templates/agent-ready-workspace/.opencode/instructions.md` — removed `/fix` reference, added manual-implementation note
+- [x] `projects/templates/agent-ready-workspace/README.md` — removed `/fix` from daily workflow
+- [x] `projects/templates/agent-ready-workspace/CLAUDE.md` — reviewed; no changes needed
+- [x] `projects/templates/agent-ready-workspace/GEMINI.md` — reviewed; no changes needed
+- [x] `projects/templates/agent-ready-workspace/.claude/settings.json` — valid Claude Code permissions schema
+- [x] `projects/templates/agent-ready-workspace/.codex/config.toml` — comments-only valid TOML; intentional
+- [x] `projects/templates/agent-ready-workspace/.gemini/settings.json` — replaced placeholder `note` with valid `context.fileName` config
 
 #### Agents (11)
 - [x] `.opencode/agents/README.md` — rewrote format guide; OpenCode-spec frontmatter, mirroring to .claude/agents/ noted
@@ -64,17 +64,17 @@ These files ship to every new workspace. Highest priority.
 - [x] `.opencode/agents/light-code-helper.md`
 
 #### Skills (11)
-- [ ] `.opencode/skills/README.md`
-- [ ] `.opencode/skills/brainstorm/SKILL.md`
-- [ ] `.opencode/skills/planning/SKILL.md`
-- [ ] `.opencode/skills/git-safe-commit/SKILL.md`
-- [ ] `.opencode/skills/data-inventory/SKILL.md`
-- [ ] `.opencode/skills/backup-restore/SKILL.md`
-- [ ] `.opencode/skills/n8n-workflow-doc/SKILL.md`
-- [ ] `.opencode/skills/security-check/SKILL.md`
-- [ ] `.opencode/skills/document-writing/SKILL.md`
-- [ ] `.opencode/skills/light-code-script/SKILL.md`
-- [ ] `.opencode/skills/stock-scanner-research/SKILL.md`
+- [x] `.opencode/skills/README.md` — rewrote format guide; only name+description per Anthropic spec
+- [x] `.opencode/skills/brainstorm/SKILL.md` — removed `allowed-tools`, `risk`, `source`
+- [x] `.opencode/skills/planning/SKILL.md`
+- [x] `.opencode/skills/git-safe-commit/SKILL.md`
+- [x] `.opencode/skills/data-inventory/SKILL.md`
+- [x] `.opencode/skills/backup-restore/SKILL.md`
+- [x] `.opencode/skills/n8n-workflow-doc/SKILL.md`
+- [x] `.opencode/skills/security-check/SKILL.md`
+- [x] `.opencode/skills/document-writing/SKILL.md`
+- [x] `.opencode/skills/light-code-script/SKILL.md`
+- [x] `.opencode/skills/stock-scanner-research/SKILL.md`
 
 #### Commands (5)
 - [x] `.opencode/commands/analyze.md` — replaced `model: sonnet` with `agent: planner`
@@ -359,3 +359,6 @@ Consequence: removed `agent:` block from `opencode.json` too — `.md` files are
 | 2026-05-23 | `opencode.json` | removed orphaned `fix` command | F3 fixed |
 | 2026-05-23 | Phase 1 findings | recorded F1–F5; awaiting decision before F1/F2 fix | 5 |
 | 2026-05-23 | Tier 1 batch | rewrote all 10 agent `.md` files + commands + agents/README + opencode.json to OpenCode spec | F1, F2, F4, F5 fixed for workspace template |
+| 2026-05-23 | Tier 1 cont. | cleaned 11 SKILL.md to Anthropic spec; fixed .gemini/settings.json; removed `/fix` from instructions+README; updated agents/README + skills/README format guides | — |
+| 2026-05-23 | Cross-cutting | removed all `/home/bohdan/` hardcoded paths from docs; generalized to `~/` | — |
+| 2026-05-23 | Tier 4 docs | updated docs/architecture.md, docs/daily-workflow.md, docs/agent-shells.md, docs/how-to-add-agents-skills.md to remove stale `/fix` refs and OpenCode misinformation | — |

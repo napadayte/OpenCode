@@ -6,15 +6,15 @@
 
 Projects:
 
-    /home/bohdan/code
+    ~/code
 
 OpenCode config:
 
-    /home/bohdan/.config/opencode
+    ~/.config/opencode
 
 Project template:
 
-    /home/bohdan/.config/opencode/projects/templates/agent-ready-project
+    ~/.config/opencode/projects/templates/agent-ready-project
 
 Project creation command:
 
@@ -86,14 +86,13 @@ Use:
 
     /analyze
     /plan <task>
-    /fix <task>
     /review
 
 Rule:
 
     /analyze before big work
     /plan before edits
-    /fix only after plan is clear
+    implement manually from the plan in docs/plans/
     /review before commit
 
 ------------------------------------------------------------

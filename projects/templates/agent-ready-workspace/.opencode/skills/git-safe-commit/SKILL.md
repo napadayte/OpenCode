@@ -1,9 +1,6 @@
 ---
 name: git-safe-commit
 description: "Commit changes safely: status check, staged-diff review, secret scan, message draft, then manual commit. NEVER auto-pushes. На русском: безопасный коммит, проверь diff, закоммитить вручную, секреты. Українською: безпечний коміт, перевір diff."
-allowed-tools: Read, Glob, Grep, Bash
-risk: low
-source: workspace
 ---
 
 # Git Safe Commit Skill

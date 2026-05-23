@@ -1,9 +1,6 @@
 ---
 name: document-writing
 description: "Workspace documentation conventions: README, runbook, ADR, plan, report, agent/skill doc. Active voice, scannable, no filler. На русском: написать документацию, инструкция, README, runbook, документ. Українською: написати документацію, інструкція."
-allowed-tools: Read, Glob, Grep, Edit, Write
-risk: low
-source: workspace
 ---
 
 # Document Writing Skill

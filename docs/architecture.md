@@ -10,7 +10,7 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
 ~/.config/opencode/
 ├── README.md                  Entry point
 ├── AGENTS.md                  Shared contract loaded by every shell
-├── opencode.json              OpenCode config: permissions, agents, commands
+├── opencode.json              OpenCode config: top-level permissions, defaults
 ├── .opencode/instructions.md  Repo-global rules (loaded via opencode.json)
 ├── docs/
 │   ├── architecture.md        This file
