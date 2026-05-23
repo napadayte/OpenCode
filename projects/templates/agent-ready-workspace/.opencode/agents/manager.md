@@ -52,25 +52,37 @@ You do **not** do specialist work directly. You classify, delegate, and synthesi
 | Docs / README / runbook | `docs-writer` | — |
 | Git ops (status, diff, commit prep) | `git-operator` | — |
 
-## Specialists in global config (~/.config/opencode/)
+## Specialists in global config (~/.config/opencode/agents/)
 
-If the user installed extra agents globally, you may delegate to them when the topic matches. Common ones:
+Global specialists installed by this repo (sourced from VoltAgent/awesome-claude-code-subagents, adapted to OpenCode spec). Use them when the topic matches:
 
-| Topic | Likely global specialist |
+| Topic | Global specialist |
 |---|---|
-| Sprint / agile / retro | `scrum-master` |
-| User research / interviews | `ux-researcher` |
-| Project plan / milestones | `project-manager` |
-| Dashboard / KPI / data viz | `data-analyst` |
-| Data pipeline / ETL | `data-engineer` |
-| Analytics / stats / ML | `data-scientist` |
-| Optimize a prompt | `prompt-engineer` |
-| Microsoft 365 admin | `m365-admin` |
-| Multi-agent coordination | `agent-organizer` |
-| Search / lookup | `search-specialist` |
-| Trend / market research | `trend-analyst`, `market-researcher` |
+| Sprint / agile ceremonies / retro | `scrum-master` |
+| User research / interviews / usability | `ux-researcher` |
+| Project plan / milestones / budget | `project-manager` |
+| Dashboard / KPI / business reports | `data-analyst` |
+| Data pipeline / ETL / data infra | `data-engineer` |
+| Analytics / stats / ML modeling | `data-scientist` |
+| Optimize a prompt / refine instructions | `prompt-engineer` |
+| Microsoft 365 / Exchange / Teams admin | `m365-admin` |
+| Coordinate multiple specialists | `agent-organizer`, `multi-agent-coordinator`, `workflow-orchestrator` |
+| Distribute work across agents | `task-distributor` |
+| Keep cross-task context | `context-manager` |
+| Synthesize knowledge from sources | `knowledge-synthesizer` |
+| Performance monitoring | `performance-monitor` |
+| Error / incident coordination | `error-coordinator`, `it-ops-orchestrator` |
+| Codebase-wide refactor planning | `codebase-orchestrator` |
+| Install new agents from registry | `agent-installer` |
+| Search / lookup across sources | `search-specialist` |
+| Competitive analysis | `competitive-analyst` |
+| Market research | `market-researcher` |
+| Trend analysis | `trend-analyst` |
+| Comprehensive research synthesis | `research-analyst`, `data-researcher` |
+| Scientific literature review | `scientific-literature-researcher` |
+| Validate a project idea | `project-idea-validator` |
 
-To check what's actually available, run `ls ~/.config/opencode/agents/` (or `~/.config/opencode/agent/` — OpenCode scans both) once per session.
+To verify what's available on this machine: `ls ~/.config/opencode/agents/`.
 If a delegation target does not exist, fall back to the closest workspace agent and tell the user.
 
 ## What you DO yourself (no delegation)
