@@ -17,26 +17,24 @@ Reusable procedures. Each skill is `<slug>/SKILL.md` with YAML frontmatter and a
 
 ## Format
 
-Each `SKILL.md` starts with YAML frontmatter:
+Each `SKILL.md` follows the Anthropic Agent Skills spec — required fields only:
 
 ```yaml
 ---
 name: <slug>
-description: "<one sentence + trigger words (EN, RU, UA)>"
-allowed-tools: <comma-separated list>
-risk: <low | medium | high | unknown>
-source: <workspace | community | extracted>
+description: One sentence covering what this skill does AND when to trigger it. Front-load concrete trigger phrases the user is likely to say (EN/RU/UA).
 ---
 ```
 
-Then the body covers: when to use, inputs needed, procedure (numbered steps), output, restrictions.
+The body covers: when to use, inputs needed, procedure (numbered steps), output, restrictions. Risk and tool implications belong in the body, not the frontmatter — both OpenCode and Claude Code ignore non-spec fields.
 
 ## Adding a skill
 
 1. Run `new-skill-doc <slug>` from inside the workspace.
 2. Move the created file into a `<slug>/` subdirectory: `<slug>/SKILL.md`.
-3. Fill the frontmatter. `risk: high` for any procedure touching data, backups, or external services.
+3. Fill `name` (must match the directory) and `description` (front-load trigger phrases).
 4. Write the procedure as concrete numbered steps — not generic 8-step boilerplate.
-5. Update `AGENTS.md` and `.opencode/skills/README.md`.
+5. If the procedure touches data, backups, or external services, document risk and required tools in a body section like `## Risk` and `## Tools used`.
+6. Update `AGENTS.md` and this README.
 
 A skill is meaningful only when its procedure is **distinct** from other skills. If you're writing the same generic steps as another skill, that means you don't have a new skill — you have a duplicate of an existing one.

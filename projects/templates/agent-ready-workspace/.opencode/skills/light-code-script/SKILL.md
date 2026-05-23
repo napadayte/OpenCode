@@ -1,9 +1,6 @@
 ---
 name: light-code-script
 description: "Write small Python or Bash script: parsers, report generators, scanner prototypes, automation helpers. Stdlib first, no hidden deps, no secrets in code. На русском: написать маленький скрипт, парсер, утилита. Українською: написати маленький скрипт, парсер."
-allowed-tools: Read, Glob, Grep, Edit, Write, Bash
-risk: medium
-source: workspace
 ---
 
 # Light Code Script Skill

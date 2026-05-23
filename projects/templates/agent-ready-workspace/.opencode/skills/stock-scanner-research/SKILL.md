@@ -1,9 +1,6 @@
 ---
 name: stock-scanner-research
 description: "Research-only stock scanner / market data work: screening, watchlists, signal analysis, report generation. NEVER executes trades. Documents sources, assumptions, limitations. На русском: сканер акций, исследование рынка, скринер, сигналы, ватчлист. Українською: сканер акцій, дослідження ринку, скринер."
-allowed-tools: Read, Glob, Grep, Edit, Write, Bash
-risk: high
-source: workspace
 ---
 
 # Stock Scanner Research Skill

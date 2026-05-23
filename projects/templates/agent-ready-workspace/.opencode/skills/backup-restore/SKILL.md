@@ -1,9 +1,6 @@
 ---
 name: backup-restore
 description: "Procedure for creating AND verifying backups, plus documenting the restore path. A backup without a verified restore is incomplete. Use for: WSL export, Docker volume, n8n data, databases, Conda envs. На русском: бэкап, восстановление, восстановить, n8n, докер вольюм. Українською: бекап, відновлення, відновити."
-allowed-tools: Read, Glob, Grep, Edit, Write, Bash
-risk: high
-source: workspace
 ---
 
 # Backup-Restore Skill

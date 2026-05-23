@@ -1,6 +1,6 @@
 ---
 description: Analyze this workspace without editing files
-model: sonnet
+agent: planner
 ---
 
 Read these files in order — do not edit anything:

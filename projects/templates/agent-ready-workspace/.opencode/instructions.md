@@ -18,9 +18,12 @@ Task-specific rules in `.opencode/rules/`. Agent roles in `.opencode/agents/`. R
 ```
 /analyze            read-only orientation
 /plan <task>        produce a step-by-step plan with risks and rollback
-/fix <task>         implement an approved plan
 /review             read-only review of pending diff
+/intake <path>      review a captured external asset
+/inventory <asset>  update data/inventory.md
 ```
+
+Implementation is manual: read the plan in `docs/plans/`, apply small reviewable changes, then `/review`.
 
 ## Behavior
 

@@ -1,9 +1,6 @@
 ---
 name: n8n-workflow-doc
 description: "Procedure for documenting an n8n workflow: trigger, actions, inputs, outputs, credentials, failure modes, recovery. Use whenever an n8n workflow is created, modified, or audited. На русском: задокументировать n8n воркфлоу, описать автоматизацию, триггер, действия. Українською: задокументувати n8n воркфлоу."
-allowed-tools: Read, Glob, Grep, Edit, Write
-risk: medium
-source: workspace
 ---
 
 # n8n Workflow Doc Skill

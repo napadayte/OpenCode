@@ -1,9 +1,6 @@
 ---
 name: security-check
 description: "Read-only secret-and-risk audit of pending changes or any specified file/folder. Scans for credentials, dangerous commands, and exposure paths. На русском: проверь на секреты, проверка безопасности, утечки, опасные команды. Українською: перевір на секрети, перевірка безпеки, витоки."
-allowed-tools: Read, Glob, Grep, Bash
-risk: low
-source: workspace
 ---
 
 # Security Check Skill

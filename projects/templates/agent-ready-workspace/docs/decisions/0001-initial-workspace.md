@@ -30,7 +30,10 @@ It is not primarily a coding project.
 ## Consequences
 
 - agents share one contract through AGENTS.md
-- detailed rules live in docs/rules/
+- detailed rules live in `.opencode/rules/`
+- agent role definitions live in `.opencode/agents/`
+- reusable procedures live in `.opencode/skills/`
+- slash commands live in `.opencode/commands/`
 - data is protected through data/inventory.md and .gitignore
 - small code is allowed but controlled
 - commits and pushes stay manual by default

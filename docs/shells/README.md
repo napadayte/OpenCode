@@ -21,11 +21,11 @@ This folder documents the AI coding shells used in the WSL development environme
 
 Projects live here:
 
-    /home/bohdan/code
+    ~/code
 
 OpenCode config lives here:
 
-    /home/bohdan/.config/opencode
+    ~/.config/opencode
 
 OpenCode config repo:
 

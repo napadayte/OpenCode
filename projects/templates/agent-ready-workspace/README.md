@@ -56,12 +56,13 @@ git status        # before
 opencode          # or claude / codex / gemini
   /analyze        # orient
   /plan <task>    # produce plan in docs/plans/
-  /fix <task>     # implement an approved plan
   /review         # read-only review of pending diff
 git status        # after
 git diff
 # commit manually only after review
 ```
+
+Implementation is manual — read the plan in `docs/plans/`, apply small reviewable changes, then `/review`. There is no auto-implement command.
 
 For non-trivial work:
 

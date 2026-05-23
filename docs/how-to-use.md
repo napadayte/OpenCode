@@ -103,7 +103,7 @@ or:
 
 Use this first prompt:
 
-    Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, docs/rules/dispatch-policy.md, and docs/rules/workflow.md. Summarize the structure, safety rules, task workflow, and next steps. Do not modify, commit, or push anything.
+    Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, docs/overview.md, docs/runbook.md, .opencode/rules/dispatch-policy.md, and .opencode/rules/workflow.md. Summarize the structure, safety rules, task workflow, and next steps. Do not modify, commit, or push anything.
 
 ------------------------------------------------------------
 
@@ -151,11 +151,17 @@ Every generated workspace has:
     README.md
     CLAUDE.md
     GEMINI.md
+    opencode.json
     .opencode/instructions.md
+    .opencode/agents/
+    .opencode/skills/
+    .opencode/commands/
+    .opencode/rules/
+    .claude/settings.json
     .codex/config.toml
+    .gemini/settings.json
     docs/overview.md
     docs/runbook.md
-    docs/rules/
     data/inventory.md
 
 Start with:
@@ -246,11 +252,9 @@ On another machine:
     cd ~/.config
     git clone git@github.com:napadayte/OpenCode.git opencode
 
-Then link scripts:
+Then run the installer (it symlinks every script in tools/bin/ into `~/.local/bin/` and marks them executable):
 
-    mkdir -p ~/.local/bin
-    ln -sf ~/.config/opencode/tools/bin/new-agent-project ~/.local/bin/new-agent-project
-    ln -sf ~/.config/opencode/tools/bin/new-agent-workspace ~/.local/bin/new-agent-workspace
+    ~/.config/opencode/tools/bin/install-opencode-tools
 
 Make sure PATH contains:
 

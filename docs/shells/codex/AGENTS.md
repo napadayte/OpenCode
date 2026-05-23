@@ -4,9 +4,9 @@ You are running in WSL on PC-HOME.
 
 Workspace:
 
-- Projects live in `/home/bohdan/code`.
+- Projects live in `~/code`.
 - Agent-ready projects should include `AGENTS.md`, `README.md`, and `docs/architecture.md`.
-- OpenCode global config lives in `/home/bohdan/.config/opencode`.
+- OpenCode global config lives in `~/.config/opencode`.
 
 Rules:
 

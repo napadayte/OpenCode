@@ -1,13 +1,15 @@
 ---
-name: security-reviewer
-description: "Read-only security check for secrets, credentials, API keys, auth files, exposed data, destructive commands, and unsafe automation. Mandatory when credentials, APIs, financial tools, or external integrations are involved. На русском: безопасность, секреты, проверь на утечки, API ключи, токены, права доступа. Українською: безпека, секрети, перевір на витоки."
-model: opus
+description: Read-only security check for secrets, credentials, API keys, auth files, exposed data, destructive commands, and unsafe automation. Mandatory when credentials, APIs, financial tools, or external integrations are involved. На русском — безопасность, секреты, проверь на утечки, API ключи, токены, права доступа. Українською — безпека, секрети, перевір на витоки.
+mode: subagent
 color: orange
-tools:
-  - Read
-  - Glob
-  - Grep
-  - SendMessage
+permission:
+  edit: deny
+  bash:
+    "*": ask
+    "rg *": allow
+    "grep *": allow
+    "git status*": allow
+    "git diff*": allow
 ---
 
 # Security Reviewer

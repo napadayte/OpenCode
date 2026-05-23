@@ -17,24 +17,36 @@ Roles available in this workspace. See each `<slug>.md` for the full definition.
 
 ## Format
 
-Each agent file starts with YAML frontmatter:
+Each agent file is the single source of truth for OpenCode. YAML frontmatter follows the OpenCode agent schema:
 
 ```yaml
 ---
-name: <slug>
-description: "<one sentence + trigger words (EN, RU, UA)>"
-model: <opus | sonnet | haiku>
-color: <color>
-tools:
-  - <Tool>
+description: One sentence + trigger words (EN/RU/UA). Front-load keywords the user is likely to type.
+mode: primary       # or "subagent" — primary appears in /agent picker, subagent is invoked via task tool
+color: blue         # cosmetic
+permission:
+  edit: ask         # ask | allow | deny — coarse rule
+  bash:             # per-pattern bash rules; default falls back to top-level opencode.json
+    "*": ask
+    "git status*": allow
+    "git push*": deny
 ---
 ```
 
-Then the body describes purpose, when to use, restrictions, output format.
+The file body becomes the agent's system prompt.
+
+Rules:
+- `name:` is NOT in frontmatter — OpenCode derives it from the filename.
+- `model:` is intentionally omitted — workspace template stays model-agnostic; the user's `default_agent` / runtime model is used.
+- `tools:` is NOT used — selection is via `permission` (the array form is Claude Code's, not OpenCode's).
+
+## Mirroring to other shells
+
+For Claude Code's `/agent` picker, copy or symlink each file into `.claude/agents/` and replace the frontmatter with Claude Code's shape (`name`, `description`, `model: sonnet|opus|haiku`, `tools: ["Read", "Write", ...]`). See `docs/how-to-add-agents-skills.md`.
 
 ## Adding an agent
 
-1. Run `new-agent-doc <slug>` from inside the workspace (skeleton creator).
-2. Fill the YAML frontmatter — explicit `tools:` whitelist (principle of least privilege).
-3. Update `AGENTS.md` and `.opencode/agents/README.md` so the new role is discoverable.
-4. If OpenCode should know it, add an entry under `agent` in `opencode.json`.
+1. Create `<slug>.md` (use `new-agent-doc <slug>` if the helper is installed).
+2. Fill frontmatter with `description`, `mode`, `permission`. Be deliberate with `permission` (principle of least privilege).
+3. Update `AGENTS.md` and this README so the new role is discoverable.
+4. No edit to `opencode.json` is needed — the file is auto-loaded.

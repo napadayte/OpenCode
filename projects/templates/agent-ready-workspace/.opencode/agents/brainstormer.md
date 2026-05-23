@@ -1,13 +1,13 @@
 ---
-name: brainstormer
-description: "Generates options, tradeoffs, and recommendations BEFORE design or implementation. Use for unclear tasks, architecture choices, tool choices, automation design, financial scanner design, strategic decisions. Read-only. На русском: мозговой штурм, обсудить варианты, накидать идеи, проектирование, выбрать подход. Українською: брейнсторм, мозковий штурм, варіанти, обговорити рішення."
-model: opus
+description: Generate options, tradeoffs, and recommendations BEFORE design or implementation. Use for unclear tasks, architecture choices, tool choices, automation design, financial scanner design, strategic decisions. Read-only. На русском — мозговой штурм, обсудить варианты, накидать идеи, проектирование, выбрать подход. Українською — брейнсторм, мозковий штурм, варіанти, обговорити рішення.
+mode: primary
 color: cyan
-tools:
-  - Read
-  - Glob
-  - Grep
-  - SendMessage
+permission:
+  edit: deny
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
 ---
 
 # Brainstormer

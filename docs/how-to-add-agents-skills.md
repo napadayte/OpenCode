@@ -41,10 +41,15 @@ Creates a skeleton at `.opencode/agents/<slug>.md` with YAML frontmatter and pla
 
 Then:
 
-1. Fill the YAML frontmatter. Explicit `tools:` whitelist (least privilege). Read-only agents get only `Read, Glob, Grep, SendMessage`.
-2. Write the body: purpose, when to use, restrictions, output format.
+1. Fill the YAML frontmatter to match the OpenCode agent schema:
+   - `description:` one sentence with trigger keywords (EN/RU/UA front-loaded)
+   - `mode:` `primary` (appears in `/agent` picker) or `subagent` (invoked via `task` tool)
+   - `color:` cosmetic
+   - `permission:` per-target rules. Read-only agents use `edit: deny` and a narrow `bash` allowlist.
+2. Write the body: purpose, when to use, restrictions, output format. The body becomes the agent's system prompt.
 3. Mention the agent in `AGENTS.md` and `.opencode/agents/README.md` so it's discoverable.
-4. Add an entry under `agent` in workspace `opencode.json` so OpenCode loads it. The agent's `prompt:` is `"Read .opencode/agents/<slug>.md and act as that agent."`
+
+No `opencode.json` edit needed — OpenCode auto-scans `.opencode/agents/*.md` and uses the filename as the agent name. Do not put `name:`, `model:`, or `tools:` in the frontmatter (these are Claude Code shape, not OpenCode; they will be silently ignored at best, or break loading at worst if invalid).
 
 ## Add a skill
 
@@ -56,9 +61,10 @@ Creates `.opencode/skills/<slug>/SKILL.md` with YAML frontmatter and placeholder
 
 Then:
 
-1. Fill the YAML frontmatter. `risk: high` for procedures touching data, backups, or external services.
+1. Fill the YAML frontmatter — only `name` and `description` are recognized. `name` must match the directory. `description` should front-load the exact trigger phrases users would type (EN/RU/UA).
 2. Write a **distinct, concrete procedure** — not generic boilerplate. If your skill's steps could be copy-pasted into another skill, you don't have a new skill.
-3. Mention the skill in `AGENTS.md` and `.opencode/skills/README.md`.
+3. If the procedure touches data, backups, or external services, document risk and required tools in a body section (e.g. `## Risk`, `## Tools used`) — both OpenCode and Claude Code ignore non-spec frontmatter fields like `risk:` or `allowed-tools:`.
+4. Mention the skill in `AGENTS.md` and `.opencode/skills/README.md`.
 
 ## How to make Claude Code see them too
 

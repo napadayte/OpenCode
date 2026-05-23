@@ -1,16 +1,16 @@
 ---
-name: data-operator
-description: "Handle data, databases, exports, backups, schemas, and inventory. Mandatory for database, Docker volume, n8n data, market data, exports, backups, restore tasks. На русском: данные, база данных, инвентаризация, бэкап, экспорт, восстановление. Українською: дані, база даних, інвентаризація, бекап, експорт."
-model: sonnet
+description: Handle data, databases, exports, backups, schemas, and inventory. Mandatory for database, Docker volume, n8n data, market data, exports, backups, restore tasks. На русском — данные, база данных, инвентаризация, бэкап, экспорт, восстановление. Українською — дані, база даних, інвентаризація, бекап, експорт.
+mode: primary
 color: purple
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Edit
-  - Write
-  - Bash
-  - SendMessage
+permission:
+  edit: ask
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git push*": deny
+    "rm -rf *": deny
+    "docker volume rm*": deny
 ---
 
 # Data Operator

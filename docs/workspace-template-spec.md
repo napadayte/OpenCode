@@ -83,20 +83,10 @@ Expected folder structure:
     ├── README.md
     ├── CLAUDE.md
     ├── GEMINI.md
+    ├── opencode.json
     ├── docs/
     │   ├── overview.md
     │   ├── runbook.md
-    │   ├── rules/
-    │   │   ├── dispatch-policy.md
-    │   │   ├── workflow.md
-    │   │   ├── brainstorm.md
-    │   │   ├── planning.md
-    │   │   ├── document-style.md
-    │   │   ├── git-operations.md
-    │   │   ├── data-operations.md
-    │   │   ├── automation-operations.md
-    │   │   ├── light-code-policy.md
-    │   │   └── security.md
     │   ├── plans/
     │   │   └── README.md
     │   ├── reports/
@@ -131,7 +121,24 @@ Expected folder structure:
     │   └── scanners/
     │       └── README.md
     ├── .opencode/
-    │   └── instructions.md
+    │   ├── instructions.md
+    │   ├── agents/
+    │   │   └── <slug>.md            (one per role)
+    │   ├── skills/
+    │   │   └── <slug>/SKILL.md      (one folder per skill)
+    │   ├── commands/
+    │   │   └── <slug>.md            (one per slash command)
+    │   └── rules/
+    │       ├── dispatch-policy.md
+    │       ├── workflow.md
+    │       ├── brainstorm.md
+    │       ├── planning.md
+    │       ├── document-style.md
+    │       ├── git-operations.md
+    │       ├── data-operations.md
+    │       ├── automation-operations.md
+    │       ├── light-code-policy.md
+    │       └── security.md
     ├── .codex/
     │   └── config.toml
     ├── .claude/
@@ -144,8 +151,12 @@ Main responsibilities:
 
 - AGENTS.md is the shared contract for all agents.
 - README.md is the human entry point.
-- docs/ contains operating documentation and rules.
-- docs/rules/ contains the real workflow system.
+- opencode.json holds OpenCode top-level permissions and defaults; agents and commands are file-based under `.opencode/`.
+- docs/ contains operating documentation: overview, runbook, plans, reports, ADRs.
+- .opencode/rules/ contains the real workflow system (read by every shell via the `instructions` array).
+- .opencode/agents/ contains one `.md` per role; each file is a valid OpenCode agent definition.
+- .opencode/skills/ contains reusable procedures, one `<slug>/SKILL.md` each (Anthropic Agent Skills spec).
+- .opencode/commands/ contains slash command definitions, one `<slug>.md` each.
 - research/ contains research notes and source summaries.
 - notes/ contains informal notes.
 - prompts/ contains reusable prompts.

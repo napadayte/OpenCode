@@ -1,9 +1,6 @@
 ---
 name: data-inventory
 description: "Procedure for adding, updating, or removing entries in data/inventory.md. Used whenever a data asset is created, moved, deleted, or its sensitivity changes. На русском: инвентаризация данных, обновить инвентарь, добавить актив. Українською: інвентаризація даних, оновити інвентар."
-allowed-tools: Read, Glob, Grep, Edit, Write
-risk: low
-source: workspace
 ---
 
 # Data Inventory Skill

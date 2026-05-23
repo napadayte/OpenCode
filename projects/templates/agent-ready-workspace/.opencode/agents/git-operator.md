@@ -1,14 +1,18 @@
 ---
-name: git-operator
-description: "Handle git: status checks, staged diffs, branch operations, sync, conflict resolution. Inspects, plans, and executes only approved commands. Never auto-pushes. На русском: гит, коммит, ветка, статус, диф, push, sync. Українською: гіт, коміт, гілка, діфф."
-model: sonnet
+description: Handle git — status checks, staged diffs, branch operations, sync, conflict resolution. Inspects, plans, and executes only approved commands. Never auto-pushes. На русском — гит, коммит, ветка, статус, диф, push, sync. Українською — гіт, коміт, гілка, діфф.
+mode: primary
 color: gray
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Bash
-  - SendMessage
+permission:
+  edit: deny
+  bash:
+    "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "git branch*": allow
+    "git push --force*": deny
+    "git reset --hard*": deny
+    "git clean -fd*": deny
 ---
 
 # Git Operator
