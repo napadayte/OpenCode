@@ -5,6 +5,13 @@ permission:
   edit: ask
   bash:
     "*": ask
+    "git status*": allow
+    "git diff*": allow
+    "git log*": allow
+    "git push*": deny
+    "rm -rf *": deny
+    "sudo *": deny
+    "docker volume rm*": deny
 ---
 
 # Automation Operator
