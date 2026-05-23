@@ -89,8 +89,10 @@ One sentence.
 - asset / location / sensitivity
 
 ## Steps
-- [ ] 1. <action> → verify: <how>
-- [ ] 2. <action> → verify: <how>
+- [PENDING]     1. <action> → verify: <how>
+- [IN PROGRESS] 2. <action> → verify: <how>  ← CURRENT
+- [COMPLETE]    3. <action> → verify: <how>
+- [BLOCKED]     4. <action> → verify: <how>
 
 ## Risks
 - <risk>: <mitigation>
@@ -101,6 +103,12 @@ One sentence.
 ## Approvals needed
 - <decision>
 ```
+
+**Status marker rules:**
+- Exactly **one** step may carry `← CURRENT` at any time.
+- Move the marker immediately when starting a new step.
+- `[BLOCKED]` — add a one-line reason below the step.
+- Use `[COMPLETE]` not a checkbox so status is unambiguous in long plans.
 
 Plus a chat summary: goal, # of steps, top 3 risks, items needing approval.
 
