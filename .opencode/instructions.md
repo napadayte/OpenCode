@@ -18,4 +18,4 @@ Wiki sync rule:
 
 - After adding or changing a provider, MCP server, agent, or skill in this repo — check `docs/wiki/обслуживание.md` and update the relevant wiki page before committing.
 - If you notice something in the config that is not documented in the wiki, flag it as a gap and suggest running the `sync-wiki` skill.
-- The `sync-wiki` skill lives at `.opencode/skills/sync-wiki/SKILL.md` — use it for a full audit.
+- The `sync-wiki` skill lives at `skills/sync-wiki/SKILL.md` (global location per opencode.ai/docs — `~/.config/opencode/skills/<name>/SKILL.md`). Use it for a full audit.

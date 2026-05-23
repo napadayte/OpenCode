@@ -9,6 +9,10 @@ permission:
     "bash *": ask
     "git status*": allow
     "git diff*": allow
+    "git log*": allow
+    "git push*": deny
+    "rm -rf *": deny
+    "sudo *": deny
 ---
 
 # Light Code Helper
