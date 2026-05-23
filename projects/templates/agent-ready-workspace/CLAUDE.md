@@ -11,7 +11,7 @@ The canonical content for this workspace lives under `.opencode/` (OpenCode is t
 
 Claude-specific runtime settings: `.claude/settings.json` (permission denies).
 
-If you want Claude's agent / skill picker UI to list the workspace's agents and skills, mirror them via symlinks or copy — see `docs/how-to-add-agents-skills.md` → "How to make Claude Code see them too".
+If you want Claude's agent / skill picker UI to list the workspace's agents and skills, mirror them via symlinks or copy into `.claude/agents/` and `.claude/skills/`. Claude Code uses different frontmatter (`name`, `model: sonnet|opus|haiku`, `tools: [...]`) — see `.opencode/agents/README.md`.
 
 ## First prompt
 

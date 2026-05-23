@@ -59,6 +59,6 @@ Analyze this workspace. Do not edit files. Read AGENTS.md, README.md, and docs/.
 ## More
 
 - `docs/architecture.md` — repo layout and workflow
-- `docs/how-to-use.md` — extended usage guide
 - `docs/agent-shells.md` — shell-specific notes (OpenCode, Codex, Claude, Gemini)
-- `docs/how-to-add-agents-skills.md` — adding agents, skills, and rules
+- `docs/workspace-template-spec.md` — full workspace template spec
+- `docs/wiki/` — visual wiki (Russian, Obsidian-friendly)

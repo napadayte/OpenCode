@@ -42,7 +42,7 @@ Rules:
 
 ## Mirroring to other shells
 
-For Claude Code's `/agent` picker, copy or symlink each file into `.claude/agents/` and replace the frontmatter with Claude Code's shape (`name`, `description`, `model: sonnet|opus|haiku`, `tools: ["Read", "Write", ...]`). See `docs/how-to-add-agents-skills.md`.
+For Claude Code's `/agent` picker, copy or symlink each file into `.claude/agents/` and replace the frontmatter with Claude Code's shape (`name`, `description`, `model: sonnet|opus|haiku`, `tools: ["Read", "Write", ...]`).
 
 ## Adding an agent
 
