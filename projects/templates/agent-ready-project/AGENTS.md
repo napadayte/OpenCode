@@ -1,5 +1,7 @@
 # AGENTS.md
 
+> **Template scope.** This is the **code-first** project template — intentionally minimal: only `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`, `docs/` and a single `.opencode/instructions.md`. No agents, skills, commands, or rules are bundled. The project inherits global agents from `~/.config/opencode/agents/` (incl. `manager` if you copy it). For a structured non-coding workspace with full `.opencode/agents/`, `.opencode/skills/`, `.opencode/rules/`, use `new-agent-workspace <name>` instead.
+
 ## Project contract
 
 Before changing code:
