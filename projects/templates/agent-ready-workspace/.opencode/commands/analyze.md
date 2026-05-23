@@ -20,6 +20,7 @@ Summarize:
 3. **Structure** — main folders and what lives in each.
 4. **Risks** — what's most likely to break or leak.
 5. **Next recommended step** — one concrete action.
+6. **Global config gaps** — if `~/.config/opencode/opencode.json` is readable, check whether any providers or MCP servers configured there are missing from `~/.config/opencode/docs/wiki/провайдеры.md`. Report gaps as open questions. Skip silently if the path is not accessible.
 
 Do not edit. Do not commit. Do not push. Do not run destructive commands.
 
