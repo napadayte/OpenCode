@@ -8,28 +8,21 @@ Template path:
 
     projects/templates/agent-ready-project
 
-Working copy path:
-
-    ~/code/_templates/agent-ready-project
-
 ------------------------------------------------------------
 
 ## How to create a new project from template
 
-Example:
+Use the script:
+
+    new-agent-project <name>
+
+Or manually:
 
     cd ~/code
     cp -a ~/.config/opencode/projects/templates/agent-ready-project my-new-project
     cd my-new-project
     git init
     git branch -M main
-
-Then edit:
-
-    README.md
-    AGENTS.md
-    docs/architecture.md
-    docs/runbook.md
 
 ------------------------------------------------------------
 
