@@ -1,31 +1,83 @@
-# Dependencies
-node_modules/
+# ------------------------------------------------------------
+# Secrets / credentials
+# ------------------------------------------------------------
 
-# Logs
-*.log
-logs/
-
-# Env / secrets
 .env
 .env.*
 auth.json
-tokens
+oauth_creds.json
+google_accounts.json
 credentials
+credentials.*
+tokens
+tokens.*
+secrets
+secrets.*
 *.key
 *.pem
+*.p12
+*.pfx
+config.local.*
+*.local.json
+*.local.toml
+*.local.yml
+*.local.yaml
 
-# Local cache / temp
+# ------------------------------------------------------------
+# Databases / dumps
+# ------------------------------------------------------------
+
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.dump
+*.sql
+*.backup
+*.bak
+
+# ------------------------------------------------------------
+# Backups / archives
+# ------------------------------------------------------------
+
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+
+# ------------------------------------------------------------
+# Logs / caches / temp
+# ------------------------------------------------------------
+
+*.log
+logs/
 .cache/
 .local/
 tmp/
 temp/
+*.tmp
 
-# Backups / archives
-*.tar
-*.tar.gz
-*.zip
+# ------------------------------------------------------------
+# Dependencies / build outputs
+# ------------------------------------------------------------
 
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.pyc
+dist/
+build/
+out/
+.next/
+
+# ------------------------------------------------------------
 # OS / editor
+# ------------------------------------------------------------
+
 .DS_Store
 Thumbs.db
 .vscode/

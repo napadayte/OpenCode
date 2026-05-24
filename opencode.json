@@ -58,10 +58,21 @@
           "pwd": "allow",
           "ls *": "allow",
           "dir *": "allow",
+          "cat *": "allow",
+          "type *": "allow",
           "rg *": "allow",
+          "grep *": "allow",
+          "find *": "allow",
+          "Get-ChildItem *": "allow",
+          "Get-Content *": "allow",
+          "Select-String *": "allow",
           "git status*": "allow",
           "git diff*": "allow",
-          "git log*": "allow"
+          "git log*": "allow",
+          "git branch*": "allow",
+          "git push*": "deny",
+          "rm -rf *": "deny",
+          "sudo *": "deny"
         }
       },
       "prompt": "You are a senior software architect. Analyze the repository, explain architecture, risks, tradeoffs, and implementation plan. Do not edit files."
@@ -83,7 +94,17 @@
           "npm run *": "ask",
           "pnpm test*": "ask",
           "pnpm *": "ask",
+          "cat *": "allow",
+          "type *": "allow",
+          "grep *": "allow",
+          "find *": "allow",
+          "Get-Content *": "allow",
+          "Select-String *": "allow",
+          "git log*": "allow",
+          "git branch*": "allow",
           "git push*": "deny",
+          "rm -rf *": "deny",
+          "sudo *": "deny",
           "Remove-Item -Recurse -Force *": "deny"
         }
       },
@@ -96,10 +117,23 @@
         "edit": "deny",
         "bash": {
           "*": "ask",
+          "pwd": "allow",
+          "ls *": "allow",
+          "dir *": "allow",
+          "cat *": "allow",
+          "type *": "allow",
           "rg *": "allow",
+          "grep *": "allow",
+          "find *": "allow",
+          "Get-ChildItem *": "allow",
+          "Get-Content *": "allow",
+          "Select-String *": "allow",
           "git status*": "allow",
           "git diff*": "allow",
-          "git log*": "allow"
+          "git log*": "allow",
+          "git push*": "deny",
+          "rm -rf *": "deny",
+          "sudo *": "deny"
         }
       },
       "prompt": "You are a strict code reviewer. Do not edit files. Find bugs, security issues, missing tests, and architecture problems."
