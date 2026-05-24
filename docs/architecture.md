@@ -14,6 +14,7 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
 ├── .opencode/instructions.md  OpenCode-specific addendum (loaded via opencode.json)
 ├── agents/                    Global OpenCode agents (mode: subagent), available across projects
 ├── skills/                    Global OpenCode skills (each skill in its own folder with SKILL.md)
+├── commands/                  Global slash commands (`/analyze`, `/plan`, `/review`) available in any folder
 ├── docs/
 │   ├── architecture.md        This file
 │   ├── agent-shells.md        Per-shell notes (full reference)
