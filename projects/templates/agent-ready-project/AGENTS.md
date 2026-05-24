@@ -1,6 +1,12 @@
 # AGENTS.md
 
-> **Template scope.** This is the **code-first** project template — intentionally minimal: only `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`, `docs/` and a single `.opencode/instructions.md`. No agents, skills, commands, or rules are bundled. The project inherits any global agents you keep under `~/.config/opencode/agents/`. For a structured non-coding workspace pre-wired with a `manager` orchestrator, full `.opencode/agents/`, `.opencode/skills/`, and `.opencode/rules/`, use `new-agent-workspace <name>` instead.
+> **Template scope.** This is the **code-first** project template — intentionally minimal: only `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`, `docs/` and a single `.opencode/instructions.md`. No agents, skills, commands, or rules are bundled locally.
+>
+> **Inherited from global config.** This project relies on a global OpenCode config cloned to `~/.config/opencode/`. From there it inherits:
+> - global agents under `~/.config/opencode/agents/`
+> - global commands `/analyze`, `/plan`, `/review` under `~/.config/opencode/commands/`
+>
+> Without the global clone, those commands are not available. For a structured non-coding workspace pre-wired with a `manager` orchestrator and a full local `.opencode/` (agents, skills, rules, workspace-specific commands like `/intake`, `/inventory`), use `new-agent-workspace <name>` instead.
 
 ## Project contract
 

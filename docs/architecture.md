@@ -11,10 +11,10 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
 ├── README.md                  Entry point
 ├── AGENTS.md                  Shared contract loaded by every shell
 ├── opencode.json              OpenCode config: top-level permissions, agents, commands
-├── package.json               Declares @opencode-ai/plugin (runtime dependency for OpenCode)
-├── .opencode/instructions.md  Repo-global rules (loaded via opencode.json)
+├── .opencode/instructions.md  OpenCode-specific addendum (loaded via opencode.json)
 ├── agents/                    Global OpenCode agents (mode: subagent), available across projects
 ├── skills/                    Global OpenCode skills (each skill in its own folder with SKILL.md)
+├── commands/                  Global slash commands (`/analyze`, `/plan`, `/review`) available in any folder
 ├── docs/
 │   ├── architecture.md        This file
 │   ├── agent-shells.md        Per-shell notes (full reference)
@@ -34,7 +34,7 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
     └── install-opencode-tools   Symlink scripts into ~/.local/bin
 ```
 
-`package.json` exists only to pin `@opencode-ai/plugin` so the plugin system resolves consistently across machines; `package-lock.json` is committed for reproducibility. Do not add other npm dependencies here — this is a config repo, not a Node project.
+This repo intentionally has no `package.json`. OpenCode loads plugins only when they are declared in the `plugin` field of an `opencode.json` (`"plugin": ["@some-org/plugin", "./local.ts"]`). Bun installs npm plugins on startup and caches them in `~/.cache/opencode/node_modules/`. If you later add a **local** TypeScript plugin under `.opencode/plugins/`, create a `package.json` at that point — not before.
 
 ## Workflow
 

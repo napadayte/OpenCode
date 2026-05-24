@@ -6,8 +6,11 @@ This repo provides one shared project contract (`AGENTS.md`) and two templates t
 
 ## What's inside
 
-- `opencode.json` — OpenCode permissions, agents, commands
+- `opencode.json` — OpenCode top-level permissions and config-repo agents
 - `AGENTS.md` — shared contract every agent reads first
+- `agents/` — global OpenCode agents available in any folder
+- `commands/` — global slash commands (`/analyze`, `/plan`, `/review`)
+- `skills/` — global OpenCode skills
 - `tools/bin/` — generator scripts (`new-agent-workspace`, `new-agent-project`, …)
 - `projects/templates/` — two templates:
   - `agent-ready-workspace` — for documentation, research, automation, data, n8n, light scripts
@@ -17,7 +20,8 @@ This repo provides one shared project contract (`AGENTS.md`) and two templates t
 ## Install
 
 ```bash
-# Clone anywhere; the canonical location is ~/.config/opencode
+# Clone to ~/.config/opencode — this path is required, not optional.
+# OpenCode picks up global agents/, commands/, skills/ from this location.
 git clone git@github.com:napadayte/OpenCode.git ~/.config/opencode
 
 # Symlink generator scripts into ~/.local/bin (also marks them executable)
@@ -27,7 +31,7 @@ git clone git@github.com:napadayte/OpenCode.git ~/.config/opencode
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 ```
 
-The scripts auto-detect the repo from their own path, so they work from any clone location.
+The clone **must** be at `~/.config/opencode/`. The generator scripts in `tools/bin/` resolve their own path, but global agents/commands/skills are only loaded from that XDG-default location — `agent-ready-project` and other generated folders depend on this.
 
 ## Daily use
 
