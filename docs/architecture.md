@@ -10,17 +10,21 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
 ~/.config/opencode/
 ├── README.md                  Entry point
 ├── AGENTS.md                  Shared contract loaded by every shell
-├── opencode.json              OpenCode config: top-level permissions, defaults
+├── opencode.json              OpenCode config: top-level permissions, agents, commands
+├── package.json               Declares @opencode-ai/plugin (runtime dependency for OpenCode)
 ├── .opencode/instructions.md  Repo-global rules (loaded via opencode.json)
+├── agents/                    Global OpenCode agents (mode: subagent), available across projects
+├── skills/                    Global OpenCode skills (each skill in its own folder with SKILL.md)
 ├── docs/
 │   ├── architecture.md        This file
 │   ├── agent-shells.md        Per-shell notes (full reference)
 │   ├── workspace-template-spec.md   Full workspace template spec
-│   ├── shells/{claude,codex,gemini}/   Per-shell instruction files
+│   ├── audits/                Historical audits and follow-ups
+│   ├── shells/{claude,codex,gemini,opencode}/   Per-shell instruction files
 │   └── wiki/                  Visual Russian wiki (Obsidian-friendly)
 ├── projects/templates/
-│   ├── agent-ready-project/     For code-first projects
-│   └── agent-ready-workspace/   For docs / research / automation / data
+│   ├── agent-ready-project/     For code-first projects (minimal — only AGENTS/CLAUDE/GEMINI/README + docs/)
+│   └── agent-ready-workspace/   For docs / research / automation / data (full .opencode/ with manager orchestrator)
 └── tools/bin/
     ├── new-agent-workspace      Create a workspace from template
     ├── new-agent-project        Create a coding project from template
@@ -29,6 +33,8 @@ Reusable global configuration for AI coding shells (OpenCode, Codex CLI, Claude 
     ├── capture-agent-asset      Intake external rule/skill source safely
     └── install-opencode-tools   Symlink scripts into ~/.local/bin
 ```
+
+`package.json` exists only to pin `@opencode-ai/plugin` so the plugin system resolves consistently across machines; `package-lock.json` is committed for reproducibility. Do not add other npm dependencies here — this is a config repo, not a Node project.
 
 ## Workflow
 
